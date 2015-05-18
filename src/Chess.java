@@ -1,4 +1,3 @@
-
 public abstract class Chess {
 	
 	public Chess(int x,int y){
@@ -22,8 +21,8 @@ public abstract class Chess {
 		return this.y;
 	}
 	
-	
-	
+	public abstract int[] getReachableGrid();
+	public abstract boolean isReachable(int x,int y);	
 	
 	private int x,y;
 }
