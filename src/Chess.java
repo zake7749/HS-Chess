@@ -47,8 +47,8 @@ public abstract class Chess {
 	}
 	
 	
-	public abstract boolean[] getReachableGrid(int[] chessboard);
-	public abstract boolean isReachable(int[]chessboard,int x,int y);	
+	public abstract boolean[] getReachableGrid(Chess[][] chessboard);
+	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
 	
 	private int x,y;
 	private String name;
