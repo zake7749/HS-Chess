@@ -50,8 +50,8 @@
 		boolean critical - 失去這個棋子是否會導致遊戲結束
 		int weight - 該棋之權重，用於AI操作
 		抽象方法：
-		boolean[] getReachableGrid(int[]):讀入棋盤，回傳該棋子可走至的所有區塊
-		boolean isReachable(int,int,int[]):讀入棋盤，判斷可否達到輸入點
+		boolean[][] getReachableGrid(Chess[][]):讀入棋盤，回傳該棋子可走至的所有區塊
+		boolean isReachable(int,int,Chess[][]):讀入棋盤，判斷可否達到輸入點
 
 3.XXXChess.java
 
