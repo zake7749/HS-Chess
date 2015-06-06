@@ -1,12 +1,18 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 public abstract class Chess {
 	
 	public Chess(String chessName,int x,int y,int camp){
+		
 		this.name = chessName;
 		this.x = x;
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 0;
+		
+		setImage();
 	}
 	
 	public void moveX(int x){
@@ -46,9 +52,12 @@ public abstract class Chess {
 		return this.critical;
 	}
 	
-	
-	public abstract boolean[] getReachableGrid(Chess[][] chessboard);
+	public abstract void setImage();	
+	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);
 	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
+ 
+	public JLabel icon;
+	public ImageIcon chessPic;
 	
 	private int x,y;
 	private String name;
