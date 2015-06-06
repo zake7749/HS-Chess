@@ -1,3 +1,6 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 
 public class Knight extends Chess{
 
@@ -7,7 +10,14 @@ public class Knight extends Chess{
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
-		
+		if(camp==1){
+			chessPic = new ImageIcon("faith_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==2){
+			chessPic = new ImageIcon("hungrydrag_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 	}
 
 	@Override

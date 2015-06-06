@@ -1,10 +1,20 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 
 public class Pawn extends Chess{
 
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
-		
+		if(camp==1){
+			chessPic = new ImageIcon("soldier_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==2){
+			chessPic = new ImageIcon("littledrag_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 	}
 
 	@Override

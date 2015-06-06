@@ -17,6 +17,14 @@ public class Bishop extends Chess {
 	
 	public void setImage()
 	{
+		if(camp==1){
+			chessPic = new ImageIcon("hero_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==2){
+			chessPic = new ImageIcon("nafarian_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 		
 	}
 	public boolean[][] getReachableGrid(Chess[][] chessboard)

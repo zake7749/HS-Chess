@@ -1,3 +1,6 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 
 public class Queen extends Chess{
 
@@ -15,7 +18,14 @@ public class Queen extends Chess{
 	
 	public void setImage()
 	{
-		
+		if(camp==1){
+			chessPic = new ImageIcon("sv_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==2){
+			chessPic = new ImageIcon("daughter_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 	}
 	public boolean[][] getReachableGrid(Chess[][] chessboard)
 	{

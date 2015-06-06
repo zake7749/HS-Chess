@@ -1,3 +1,6 @@
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 
 public class King extends Chess{
 
@@ -16,6 +19,14 @@ public class King extends Chess{
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
+		if(camp==1){
+			chessPic = new ImageIcon("kyan_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==2){
+			chessPic = new ImageIcon("deadwing_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 		
 	}
 
