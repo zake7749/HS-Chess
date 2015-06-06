@@ -112,13 +112,4 @@ public class Bishop extends Chess {
 		
 		return reach;
 	}
- 
-	public JLabel icon;
-	public ImageIcon chessPic;
-	
-	protected int x,y;
-	protected String name;
-	protected boolean critical;
-	protected int weight;
-	protected int camp;
 }
