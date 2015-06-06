@@ -1,9 +1,14 @@
 /AI.class
+/Bishop.class
 /Chess.class
 /Game$1.class
-/Point.class
+/Game.class
 /King.class
-/Rock.class
 /Knight.class
+<<<<<<< HEAD
 /Bishop.class
 /Pawn.class
+=======
+/Point.class
+/Rock.class
+>>>>>>> origin/master
