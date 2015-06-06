@@ -23,10 +23,11 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.CompoundBorder;
 
-import javax.swing.*;
 import java.awt.Font;
-import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.JTextArea;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 
 public class Game extends JFrame implements MouseListener{
 

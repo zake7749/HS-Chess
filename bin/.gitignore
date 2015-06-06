@@ -1,8 +1,9 @@
 /AI.class
+/Bishop.class
 /Chess.class
 /Game$1.class
-/Point.class
+/Game.class
 /King.class
-/Rock.class
 /Knight.class
-/Bishop.class
+/Point.class
+/Rock.class
