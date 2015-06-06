@@ -54,7 +54,6 @@ public class King extends Chess{
 				}
 			}
 		}
-		
 		return res;
 	}
 	
