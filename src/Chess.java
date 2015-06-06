@@ -3,6 +3,10 @@ import javax.swing.JLabel;
 
 public abstract class Chess {
 	
+	public Chess(){
+		
+	}
+	
 	public Chess(String chessName,int x,int y,int camp){
 		
 		this.name = chessName;
@@ -52,6 +56,7 @@ public abstract class Chess {
 		return this.critical;
 	}
 	
+	
 	public abstract void setImage();	
 	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);
 	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
@@ -59,9 +64,9 @@ public abstract class Chess {
 	public JLabel icon;
 	public ImageIcon chessPic;
 	
-	private int x,y;
-	private String name;
-	private boolean critical;
-	private int weight;
-	private int camp;
+	protected int x,y;
+	protected String name;
+	protected boolean critical;
+	protected int weight;
+	protected int camp;
 }
