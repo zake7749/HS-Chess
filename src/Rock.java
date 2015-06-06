@@ -17,7 +17,7 @@ public class Rock extends Chess{
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
 		
-		for(i=0;i<8;i++){
+		for(i=y;i<8;i++){
 			if(chessboard[x][i]==null)
 				reachable[x][i] = true;
 			else if(chessboard[x][i].camp!=camp){
@@ -27,7 +27,26 @@ public class Rock extends Chess{
 			else break;
 		}
 		
-		for(i=0;i<8;i++){
+		for(i=y;i>=0;y--){
+			if(chessboard[x][i]==null)
+				reachable[x][i] = true;
+			else if(chessboard[x][i].camp!=camp){
+				reachable[x][i] = true;
+				break;
+			}
+			else break;
+		}
+		
+		for(i=x;i<8;i++){
+			if(chessboard[i][y]==null)
+				reachable[i][y] = true;
+			else if(chessboard[i][y].camp!=camp){
+				reachable[i][y] = true;
+				break;
+			}
+			else break;
+		}
+		for(i=x;i>=0;i--){
 			if(chessboard[i][y]==null)
 				reachable[i][y] = true;
 			else if(chessboard[i][y].camp!=camp){
