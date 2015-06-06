@@ -5,5 +5,10 @@
 /Game.class
 /King.class
 /Knight.class
+<<<<<<< HEAD
+/Bishop.class
+/Pawn.class
+=======
 /Point.class
 /Rock.class
+>>>>>>> origin/master

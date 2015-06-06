@@ -162,15 +162,11 @@ public class Game extends JFrame implements MouseListener{
 		//my code:)
 
 		JPanel color = new JPanel();
-		color.setLocation(10, 10);
+		color.setLocation(e.getX(), e.getY());
 		color.setSize(70, 70);
 		color.setBackground(Color.YELLOW);
-	
-		
-//		JLabel test = new JLabel("");
-//		test.setBounds(19, 24, 89, 94);
-//		test.setIcon(new ImageIcon("test.jpg"));
 		chessBoardpic.add(color); 
+		color.setVisible(false);
 		chessBoardpic.repaint();
 		
 		if(state == 0){
