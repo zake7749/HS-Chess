@@ -1,5 +1,13 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 
 public class Bishop extends Chess {
 	
@@ -26,6 +34,39 @@ public class Bishop extends Chess {
 			icon = new JLabel(chessPic);
 		}
 		
+	}
+	public void setMusic(){
+		if(camp==1){
+			String song = "hero.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				AudioStream audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(camp==2){
+			String song = "nafarian.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				AudioStream audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    
 	}
 	public boolean[][] getReachableGrid(Chess[][] chessboard)
 	{
