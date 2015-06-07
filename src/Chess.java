@@ -57,7 +57,8 @@ public abstract class Chess {
 	}
 	
 	
-	public abstract void setImage();	
+	public abstract void setImage();
+	public abstract void setMusic();
 	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);
 	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
  
