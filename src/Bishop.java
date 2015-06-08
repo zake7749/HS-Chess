@@ -6,8 +6,9 @@ import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
+
+import sun.audio.*;
 
 public class Bishop extends Chess {
 	
@@ -25,18 +26,18 @@ public class Bishop extends Chess {
 	
 	public void setImage()
 	{
-		if(camp==1){
+		if(camp==0){
 			chessPic = new ImageIcon("hero_final.jpg");
 			icon = new JLabel(chessPic);
 		}
-		else if(camp==2){
+		else if(camp==1){
 			chessPic = new ImageIcon("nafarian_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "hero.wav";
 			InputStream in;
 			try {
@@ -51,7 +52,7 @@ public class Bishop extends Chess {
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "nafarian.wav";
 			InputStream in;
 			try {
@@ -77,63 +78,79 @@ public class Bishop extends Chess {
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y-i>=0 && chessboard[x-i][y-i] == null)
+			if(x-i >= 0 && y-i>=0) //in the range
 			{
-				reachable[x-i][y-i] = true;
-			}
-			else if (chessboard[x-i][y-i].camp != camp)
-			{
-				reachable[x-i][y-i] = true;
-				break;
+				if(chessboard[x-i][y-i] == null) // reachable
+				{
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+					break;
+				}
+				else	break; 
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y+i < 8 && chessboard[x-i][y+i] == null)
+			if(x-i >= 0 && y+i < 8 ) // in the range
 			{
-				reachable[x-i][y+i] = true;
-			}
-			else if (chessboard[x-i][y+i].camp != camp)
-			{
-				reachable[x-i][y+i] = true;
-				break;
+				if(chessboard[x-i][y+i] == null) //reachable
+				{
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+					break;
+				}	
+				else	break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y-i>=0 && chessboard[x+i][y-i] == null)
+			if(x+i < 8 && y-i>=0) //in the range
 			{
-				reachable[x+i][y-i] = true;
-			}
-			else if (chessboard[x+i][y-i].camp != camp)
-			{
-				reachable[x+i][y-i] = true;
-				break;
+				if(chessboard[x+i][y-i] == null) // reachable
+				{
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+					break;
+				}
+				else break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y+i < 8 && chessboard[x+i][y+i] == null)
+			if(x+i < 8 && y+i < 8) //in the range
 			{
-				reachable[x+i][y+i] = true;
+				if(chessboard[x+i][y+i] == null) // reachable
+				{
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+					break;
+				}
+				else	break;
 			}
-			else if (chessboard[x+i][y+i].camp != camp)
-			{
-				reachable[x+i][y+i] = true;
-				break;
-			}
-			
+					
 			else break;
 		}
 		

@@ -38,7 +38,7 @@ public class Rock extends Chess{
 		}
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "druid.wav";
 			InputStream in;
 			try {
@@ -53,7 +53,7 @@ public class Rock extends Chess{
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "volcanodrag.wav";
 			InputStream in;
 			try {
