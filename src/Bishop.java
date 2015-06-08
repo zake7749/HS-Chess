@@ -6,8 +6,9 @@ import java.io.InputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+
+
+import sun.audio.*;
 
 public class Bishop extends Chess {
 	
