@@ -79,61 +79,77 @@ public class Bishop extends Chess {
 		
 		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y-i>=0 && chessboard[x-i][y-i] == null)
+			if(x-i >= 0 && y-i>=0) //in the range
 			{
-				reachable[x-i][y-i] = true;
-			}
-			else if (chessboard[x-i][y-i].camp != camp)
-			{
-				reachable[x-i][y-i] = true;
-				break;
+				if(chessboard[x-i][y-i] == null) // reachable
+				{
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+					break;
+				}
+				else	break; 
 			}
 			
-			else break;
+			else	break;
 		}
 		
 		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y+i < 8 && chessboard[x-i][y+i] == null)
+			if(x-i >= 0 && y+i < 8 ) // in the range
 			{
-				reachable[x-i][y+i] = true;
-			}
-			else if (chessboard[x-i][y+i].camp != camp)
-			{
-				reachable[x-i][y+i] = true;
-				break;
+				if(chessboard[x-i][y+i] == null) //reachable
+				{
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+					break;
+				}	
+				else	break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
 		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y-i>=0 && chessboard[x+i][y-i] == null)
+			if(x+i < 8 && y-i>=0) //in the range
 			{
-				reachable[x+i][y-i] = true;
-			}
-			else if (chessboard[x+i][y-i].camp != camp)
-			{
-				reachable[x+i][y-i] = true;
-				break;
+				if(chessboard[x+i][y-i] == null) // reachable
+				{
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+					break;
+				}
+				else break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
 		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y+i < 8 && chessboard[x+i][y+i] == null)
+			if(x+i < 8 && y+i < 8) //in the range
 			{
-				reachable[x+i][y+i] = true;
+				if(chessboard[x+i][y+i] == null) // reachable
+				{
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+					break;
+				}
+				else	break;
 			}
-			else if (chessboard[x+i][y+i].camp != camp)
-			{
-				reachable[x+i][y+i] = true;
-				break;
-			}
-			
+					
 			else break;
 		}
 		
