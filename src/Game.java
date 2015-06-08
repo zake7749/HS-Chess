@@ -46,6 +46,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private int state;
 	private int nowcamp;
 	private int stateX, stateY;
+	JPanel[][] color;
 	//my code
 	
 	public static void main(String[] args) {
@@ -135,12 +136,32 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		//my code
 		
 		chessBoard = new Chess[8][8];
-		chessBoard[4][7] = new Rock("wKing",4,7,0);//test
+		
+		chessBoard[4][7] = new King("wKing",4,7,0);//test
 		chessBoard[4][7].setImage();
 		chessBoard[4][7].icon.setBounds((chessBoard[4][7].x)*70+19,(chessBoard[4][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[4][7].icon);
+		
+		chessBoard[0][6] = new King("bKing",0,6,1);//test
+		chessBoard[0][6].setImage();
+		chessBoard[0][6].icon.setBounds((chessBoard[0][6].x)*70+19,(chessBoard[0][6].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[0][6].icon);
+		
+		color = new JPanel[8][8];
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){
+				color[i][j] = new JPanel();
+				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
+				color[i][j].setSize(70, 70);
+				color[i][j].setBackground(Color.YELLOW);
+				chessBoardpic.add(color[i][j]); 
+				color[i][j].setVisible(false);
+			}
+		}
+		
 		chessBoardpic.repaint();
-		state = 0;//first state=2
+		
+		state = 2;//first state=2
 		nowcamp = 0;//
 		stateX = -1;
 		stateY = -1;
@@ -162,10 +183,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		Point p = determineGrid(e.getX(),e.getY());
 		//my code:)
-
-		JPanel color = new JPanel();
-		color.setVisible(false);
-		chessBoardpic.repaint();
 		
 		if(state == 0){
 
@@ -174,21 +191,18 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				
 				boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
 				System.out.println(chessBoard[p.x][p.y].name);//test
+				System.out.println("camp:"+nowcamp);//test
+				
 				for(int i = 0; i < 8; i ++){
 					for(int j = 0; j < 8; j ++){
-						System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
+						//System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
 						if(boardAvailable[i][j] == true){
-							
-							color = new JPanel();
-							color.setLocation(20 + i * 70, 39 + j * 70);//
-							color.setSize(70, 70);
-							color.setBackground(Color.YELLOW);
-							chessBoardpic.add(color); 
-							color.setVisible(true);
-							chessBoardpic.repaint();
+							color[i][j].setVisible(true);
 						}
 					}
 				}
+				chessBoardpic.repaint();
+				
 				stateX = p.x;
 				stateY = p.y;
 				state = 1;
@@ -196,17 +210,36 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 
 		}else if(state == 1){
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
-				if(chessBoard[stateX][stateY].isCritical()){
+				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
 					state = 2;
 				}
+				else{
+					state = 0;
+				}
+				
+				for(int i = 0; i < 8; i ++){
+					for(int j = 0; j < 8; j ++){	
+						color[i][j].setVisible(false);//clear block
+					}
+				}
+				if(chessBoard[p.x][p.y] != null){
+					chessBoard[p.x][p.y].icon.setIcon(null);//clear picture
+				}
+				chessBoard[stateX][stateY].icon.setIcon(null);//clear picture
+				
 				chessBoard[stateX][stateY].moveXY(p.x,p.y);
 				chessBoard[p.x][p.y] = chessBoard[stateX][stateY];
 				chessBoard[stateX][stateY] = null;//
-				state = 0;
+				
+				chessBoard[p.x][p.y].setImage();//
+				chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
+				chessBoardpic.add(chessBoard[p.x][p.y].icon);
+				chessBoardpic.repaint();
+				
 				if(nowcamp == 0){
 					nowcamp = 1;
 				}
-				if(nowcamp == 1){
+				else if(nowcamp == 1){
 					nowcamp = 0;
 				}
 				
