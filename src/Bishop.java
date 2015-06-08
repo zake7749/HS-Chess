@@ -77,7 +77,7 @@ public class Bishop extends Chess {
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
 			if(x-i >= 0 && y-i>=0 && chessboard[x-i][y-i] == null)
 			{
@@ -92,7 +92,7 @@ public class Bishop extends Chess {
 			else break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
 			if(x-i >= 0 && y+i < 8 && chessboard[x-i][y+i] == null)
 			{
@@ -107,7 +107,7 @@ public class Bishop extends Chess {
 			else break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
 			if(x+i < 8 && y-i>=0 && chessboard[x+i][y-i] == null)
 			{
@@ -122,7 +122,7 @@ public class Bishop extends Chess {
 			else break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
 			if(x+i < 8 && y+i < 8 && chessboard[x+i][y+i] == null)
 			{
