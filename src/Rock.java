@@ -3,15 +3,28 @@ import javax.swing.JLabel;
 
 
 public class Rock extends Chess{
-
+	
+	
+	public Rock(String chessName,int x,int y,int camp){
+		
+		this.name = chessName;
+		this.x = x;
+		this.y = y;
+		this.camp = camp;
+		this.critical = false;
+		this.weight = 0;
+		
+		setImage();
+	}
+	
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
-		if(camp==1){
+		if(camp==0){
 			chessPic = new ImageIcon("druid_final.jpg");
 			icon = new JLabel(chessPic);
 		}
-		else if(camp==2){
+		else if(camp==1){
 			chessPic = new ImageIcon("volcanicdrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
@@ -26,8 +39,23 @@ public class Rock extends Chess{
 		for(i=0;i<8;i++)
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
-		
-		for(i=y;i<8;i++){
+
+		for(i=y+1;i<8;i++){
+			if(chessboard[x][i]==null){
+				reachable[x][i] = true;
+			}
+			else if(chessboard[x][i].camp!=camp){
+				System.out.println("I SHOCK YOU!");
+				reachable[x][i] = true;
+				break;
+			}
+			else{
+				System.out.println("I SHOCK YOU!");
+				break;
+			}
+		}
+
+		for(i=y-1;i>=0;i--){
 			if(chessboard[x][i]==null)
 				reachable[x][i] = true;
 			else if(chessboard[x][i].camp!=camp){
@@ -36,18 +64,8 @@ public class Rock extends Chess{
 			}
 			else break;
 		}
-		
-		for(i=y;i>=0;y--){
-			if(chessboard[x][i]==null)
-				reachable[x][i] = true;
-			else if(chessboard[x][i].camp!=camp){
-				reachable[x][i] = true;
-				break;
-			}
-			else break;
-		}
-		
-		for(i=x;i<8;i++){
+
+		for(i=x+1;i<8;i++){
 			if(chessboard[i][y]==null)
 				reachable[i][y] = true;
 			else if(chessboard[i][y].camp!=camp){
@@ -56,7 +74,8 @@ public class Rock extends Chess{
 			}
 			else break;
 		}
-		for(i=x;i>=0;i--){
+
+		for(i=x-1;i>=0;i--){
 			if(chessboard[i][y]==null)
 				reachable[i][y] = true;
 			else if(chessboard[i][y].camp!=camp){
@@ -65,7 +84,7 @@ public class Rock extends Chess{
 			}
 			else break;
 		}
-		
+
 		reachable[x][y] = false;
 		
 		return reachable;
