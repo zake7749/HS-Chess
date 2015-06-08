@@ -153,7 +153,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				color[i][j] = new JPanel();
 				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
 				color[i][j].setSize(70, 70);
-				color[i][j].setBackground(Color.YELLOW);
+				color[i][j].setBackground(new Color(0,191,255,80));
 				chessBoardpic.add(color[i][j]); 
 				color[i][j].setVisible(false);
 			}
