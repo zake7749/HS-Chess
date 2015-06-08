@@ -78,7 +78,22 @@ public class Queen extends Chess{
 				reachable[i][j] = false;
 		
 		//Rook
-		for(i=y;i<8;i++){
+		for(i=y+1;i<8;i++){
+			if(chessboard[x][i]==null){
+				reachable[x][i] = true;
+			}
+			else if(chessboard[x][i].camp!=camp){
+				System.out.println("I SHOCK YOU!");
+				reachable[x][i] = true;
+				break;
+			}
+			else{
+				System.out.println("I SHOCK YOU!");
+				break;
+			}
+		}
+
+		for(i=y-1;i>=0;i--){
 			if(chessboard[x][i]==null)
 				reachable[x][i] = true;
 			else if(chessboard[x][i].camp!=camp){
@@ -87,18 +102,8 @@ public class Queen extends Chess{
 			}
 			else break;
 		}
-		
-		for(i=y;i>=0;y--){
-			if(chessboard[x][i]==null)
-				reachable[x][i] = true;
-			else if(chessboard[x][i].camp!=camp){
-				reachable[x][i] = true;
-				break;
-			}
-			else break;
-		}
-		
-		for(i=x;i<8;i++){
+
+		for(i=x+1;i<8;i++){
 			if(chessboard[i][y]==null)
 				reachable[i][y] = true;
 			else if(chessboard[i][y].camp!=camp){
@@ -107,7 +112,8 @@ public class Queen extends Chess{
 			}
 			else break;
 		}
-		for(i=x;i>=0;i--){
+
+		for(i=x-1;i>=0;i--){
 			if(chessboard[i][y]==null)
 				reachable[i][y] = true;
 			else if(chessboard[i][y].camp!=camp){
@@ -119,63 +125,79 @@ public class Queen extends Chess{
 		
 		//Bishop		
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y-i>=0 && chessboard[x-i][y-i] == null)
+			if(x-i >= 0 && y-i>=0) //in the range
 			{
-				reachable[x-i][y-i] = true;
-			}
-			else if (chessboard[x-i][y-i].camp != camp)
-			{
-				reachable[x-i][y-i] = true;
-				break;
+				if(chessboard[x-i][y-i] == null) // reachable
+				{
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+					break;
+				}
+				else	break; 
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y+i < 8 && chessboard[x-i][y+i] == null)
+			if(x-i >= 0 && y+i < 8 ) // in the range
 			{
-				reachable[x-i][y+i] = true;
-			}
-			else if (chessboard[x-i][y+i].camp != camp)
-			{
-				reachable[x-i][y+i] = true;
-				break;
+				if(chessboard[x-i][y+i] == null) //reachable
+				{
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+					break;
+				}	
+				else	break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y-i>=0 && chessboard[x+i][y-i] == null)
+			if(x+i < 8 && y-i>=0) //in the range
 			{
-				reachable[x+i][y-i] = true;
-			}
-			else if (chessboard[x+i][y-i].camp != camp)
-			{
-				reachable[x+i][y-i] = true;
-				break;
+				if(chessboard[x+i][y-i] == null) // reachable
+				{
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+					break;
+				}
+				else break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y+i < 8 && chessboard[x+i][y+i] == null)
+			if(x+i < 8 && y+i < 8) //in the range
 			{
-				reachable[x+i][y+i] = true;
+				if(chessboard[x+i][y+i] == null) // reachable
+				{
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+					break;
+				}
+				else	break;
 			}
-			else if (chessboard[x+i][y+i].camp != camp)
-			{
-				reachable[x+i][y+i] = true;
-				break;
-			}
-			
+					
 			else break;
 		}
 		
