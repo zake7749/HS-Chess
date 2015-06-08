@@ -26,18 +26,18 @@ public class Bishop extends Chess {
 	
 	public void setImage()
 	{
-		if(camp==1){
+		if(camp==0){
 			chessPic = new ImageIcon("hero_final.jpg");
 			icon = new JLabel(chessPic);
 		}
-		else if(camp==2){
+		else if(camp==1){
 			chessPic = new ImageIcon("nafarian_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "hero.wav";
 			InputStream in;
 			try {
@@ -52,7 +52,7 @@ public class Bishop extends Chess {
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "nafarian.wav";
 			InputStream in;
 			try {

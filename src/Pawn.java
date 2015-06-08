@@ -39,7 +39,7 @@ public class Pawn extends Chess{
 		}
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "soldier.wav";
 			InputStream in;
 			try {
@@ -54,7 +54,7 @@ public class Pawn extends Chess{
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "littledrag.wav";
 			InputStream in;
 			try {

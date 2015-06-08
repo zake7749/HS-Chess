@@ -27,18 +27,18 @@ public class King extends Chess{
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
-		if(camp==1){
+		if(camp==0){
 			chessPic = new ImageIcon("kyan_final.jpg");
 			icon = new JLabel(chessPic);
 		}
-		else if(camp==2){
+		else if(camp==1){
 			chessPic = new ImageIcon("deadwing_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "kyan.wav";
 			InputStream in;
 			try {
@@ -53,7 +53,7 @@ public class King extends Chess{
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "deadwing.wav";
 			InputStream in;
 			try {

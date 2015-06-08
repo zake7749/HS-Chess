@@ -18,17 +18,17 @@ public class Knight extends Chess{
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
-		if(camp==1){
+		if(camp==0){
 			chessPic = new ImageIcon("faith_final.jpg");
 			icon = new JLabel(chessPic);
 		}
-		else if(camp==2){
+		else if(camp==1){
 			chessPic = new ImageIcon("hungrydrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}
 	public void setMusic(){
-		if(camp==1){
+		if(camp==0){
 			String song = "faith.wav";
 			InputStream in;
 			try {
@@ -43,7 +43,7 @@ public class Knight extends Chess{
 				e.printStackTrace();
 			}
 		}
-		else if(camp==2){
+		else if(camp==1){
 			String song = "hungrydrag.wav";
 			InputStream in;
 			try {
