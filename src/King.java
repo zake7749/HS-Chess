@@ -81,18 +81,18 @@ public class King extends Chess{
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
 		
-		for(i=x-1;i<=x+1;x++){
-			for(j=y-1;j<=j+1;j++){
+		for(i=x-1;i<=x+1;i++){
+			for(j=y-1;j<=y+1;j++){
 				if(i>=0&&j>=0&&i<8&&j<8)
 				{
-					if(chessboard[i][j]!=null)
+					if(chessboard[i][j]==null)
 						reachable[i][j] = true;
 					else if(chessboard[i][j].camp!=camp)
 						reachable[i][j] = true;
 				}
 			}
 		}
-		reachable[i][j] = false;
+		reachable[x][y] = false;
 		
 		return reachable;
 	}
@@ -103,10 +103,10 @@ public class King extends Chess{
 		int i,j;
 		boolean res = false;
 		
-		for(i=x-1;i<=x+1;x++){
-			for(j=y-1;j<=j+1;j++){
+		for(i=x-1;i<=x+1;i++){
+			for(j=y-1;j<=y+1;j++){
 				if((i>=0&&j>=0&&i<8&&j<8)&&(i==dx&&j==dy)){
-					if(chessboard[i][j]!=null)
+					if(chessboard[i][j]==null)
 						res = true;
 					else if(chessboard[i][j].camp!=camp)
 						res = true;
