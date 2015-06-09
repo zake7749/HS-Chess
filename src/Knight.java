@@ -97,7 +97,7 @@ public class Knight extends Chess{
 				}
 			}
 		}
-		return false;
+		return res;
 	}
 
 }
