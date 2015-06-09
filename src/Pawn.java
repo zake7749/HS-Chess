@@ -86,10 +86,10 @@ public class Pawn extends Chess{
 				reachable[x+1][y]=true;
 		}
 		if(x-1>=0){
-			if(chessboard[x+1][y]==null)
-				reachable[x+1][y]=true;
-			else if(chessboard[x+1][y].camp!=camp)
-				reachable[x+1][y]=true;
+			if(chessboard[x-1][y]==null)
+				reachable[x-1][y]=true;
+			else if(chessboard[x-1][y].camp!=camp)
+				reachable[x-1][y]=true;
 		}
 		if(y+1<8){
 			if(chessboard[x][y+1]==null)
