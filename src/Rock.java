@@ -139,7 +139,19 @@ public class Rock extends Chess{
 		
 		if(x==lx||y==ly){
 			if(x==lx){
-				for(i=lx;i<8;i++){
+				for(i=lx+1;i<8;i++){
+					if((chessboard[x][i]==null)){
+						if(i==ly)
+							res = true;
+					}else if(chessboard[x][i].camp!=camp){
+						if(i==ly){
+							res = true;
+							break;
+						}
+					}else break;
+				}
+				
+				for(i=lx-1;i>=0;i--){
 					if((chessboard[x][i]==null)){
 						if(i==ly)
 							res = true;
@@ -152,7 +164,18 @@ public class Rock extends Chess{
 				}
 			}
 			else{
-				for(i=ly;i<8;i++){
+				for(i=ly+1;i<8;i++){
+					if((chessboard[i][y]==null)){
+						if(i==lx)
+							res = true;
+					}else if(chessboard[i][y].camp!=camp){
+						if(i==lx){
+							res = true;
+							break;
+						}
+					}else break;
+				}
+				for(i=ly-1;i>=0;i--){
 					if((chessboard[i][y]==null)){
 						if(i==lx)
 							res = true;
