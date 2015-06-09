@@ -1,4 +1,3 @@
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -31,6 +30,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
 import java.awt.event.ActionListener;//
 import java.awt.event.ActionEvent;
+import javax.swing.JButton;//
 
 public class Game extends JFrame implements MouseListener , ActionListener{//test
 
@@ -42,6 +42,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private String debugMessage;
 	private Chess[][] chessBoard;
 	private JLabel testP;
+	
+	private JPanel panel_2,panel_3;
 	//my code
 	private int state;
 	private int nowcamp;
@@ -103,15 +105,25 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_1.setBounds(620, 391, 229, 230);
 		contentPane.add(panel_1);
 		
-		JTextArea history = new JTextArea();
-		history.setBounds(620, 391, 229, 230);
+		panel_2 = new JPanel();//
+		JTextArea campName = new JTextArea();
+		campName.setBounds(620, 391, 229, 230);
 		Font font = new Font("Verdana", Font.BOLD, 20);
-		history.setFont(font);
-		history.setForeground(Color.BLUE);
-		history.setText("A1 -> A2");
-		panel_1.add(history);
+		campName.setFont(font);
+		campName.setForeground(Color.BLUE);
+		campName.setText("Humans Alliance");
+		panel_2.add(campName);
+		panel_1.add(panel_2);//
 		
-
+		panel_3 = new JPanel();//
+		JTextArea campName2 = new JTextArea();
+		campName2.setBounds(620, 391, 229, 230);
+		campName2.setFont(font);
+		campName2.setForeground(Color.BLUE);
+		campName2.setText("Dark Dragon");
+		panel_3.add(campName2);
+		panel_1.add(panel_3);//
+		panel_3.setVisible(false);
 		
 		JMenu menu = new JMenu("Menu");
 		JMenuItem newGame = new JMenuItem("Game Start");
@@ -142,18 +154,99 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoard[4][7].icon.setBounds((chessBoard[4][7].x)*70+19,(chessBoard[4][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[4][7].icon);
 		
-		chessBoard[0][6] = new King("bKing",0,6,1);//test
-		chessBoard[0][6].setImage();
-		chessBoard[0][6].icon.setBounds((chessBoard[0][6].x)*70+19,(chessBoard[0][6].y)*70+39,70,70);
-		chessBoardpic.add(chessBoard[0][6].icon);
+		chessBoard[3][0] = new King("bKing",3,0,1);//test
+		chessBoard[3][0].setImage();
+		chessBoard[3][0].icon.setBounds((chessBoard[3][0].x)*70+19,(chessBoard[3][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[3][0].icon);
+		
+		chessBoard[3][7] = new Queen("wQueen",3,7,0);//test
+		chessBoard[3][7].setImage();
+		chessBoard[3][7].icon.setBounds((chessBoard[3][7].x)*70+19,(chessBoard[3][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[3][7].icon);
+		
+		chessBoard[4][0] = new Queen("bQueen",4,0,1);//test
+		chessBoard[4][0].setImage();
+		chessBoard[4][0].icon.setBounds((chessBoard[4][0].x)*70+19,(chessBoard[4][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[4][0].icon);
+		
+		for(int i = 0; i < 8; i++){
+			chessBoard[i][1] = new Pawn("bPawn",i,1,1);//test
+			chessBoard[i][1].setImage();
+			chessBoard[i][1].icon.setBounds((chessBoard[i][1].x)*70+19,(chessBoard[i][1].y)*70+39,70,70);
+			chessBoardpic.add(chessBoard[i][1].icon);
+		}
+		
+		for(int i = 0; i < 8; i++){
+			chessBoard[i][6] = new Pawn("wPawn",i,6,0);//test
+			chessBoard[i][6].setImage();
+			chessBoard[i][6].icon.setBounds((chessBoard[i][6].x)*70+19,(chessBoard[i][6].y)*70+39,70,70);
+			chessBoardpic.add(chessBoard[i][6].icon);
+		}
+		
+		chessBoard[0][0] = new Rock("bRock",0,0,1);//test
+		chessBoard[0][0].setImage();
+		chessBoard[0][0].icon.setBounds((chessBoard[0][0].x)*70+19,(chessBoard[0][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[0][0].icon);
+		chessBoard[7][0] = new Rock("bRock",7,0,1);//test
+		chessBoard[7][0].setImage();
+		chessBoard[7][0].icon.setBounds((chessBoard[7][0].x)*70+19,(chessBoard[7][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[7][0].icon);
+		
+		chessBoard[0][7] = new Rock("wRock",0,7,0);//test
+		chessBoard[0][7].setImage();
+		chessBoard[0][7].icon.setBounds((chessBoard[0][7].x)*70+19,(chessBoard[0][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[0][7].icon);
+		chessBoard[7][7] = new Rock("wRock",7,7,0);//test
+		chessBoard[7][7].setImage();
+		chessBoard[7][7].icon.setBounds((chessBoard[7][7].x)*70+19,(chessBoard[7][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[7][7].icon);
+		
+		chessBoard[1][0] = new Knight("bKnight",1,0,1);//test
+		chessBoard[1][0].setImage();
+		chessBoard[1][0].icon.setBounds((chessBoard[1][0].x)*70+19,(chessBoard[1][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[1][0].icon);
+		chessBoard[6][0] = new Knight("bKnight",6,0,1);//test
+		chessBoard[6][0].setImage();
+		chessBoard[6][0].icon.setBounds((chessBoard[6][0].x)*70+19,(chessBoard[6][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[6][0].icon);
+		
+		chessBoard[1][7] = new Knight("wKnight",1,7,0);//test
+		chessBoard[1][7].setImage();
+		chessBoard[1][7].icon.setBounds((chessBoard[1][7].x)*70+19,(chessBoard[1][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[1][7].icon);
+		chessBoard[6][7] = new Knight("wKnight",6,7,0);//test
+		chessBoard[6][7].setImage();
+		chessBoard[6][7].icon.setBounds((chessBoard[6][7].x)*70+19,(chessBoard[6][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[6][7].icon);
+		
+		chessBoard[2][0] = new Bishop("bBishop",2,0,1);//test
+		chessBoard[2][0].setImage();
+		chessBoard[2][0].icon.setBounds((chessBoard[2][0].x)*70+19,(chessBoard[2][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[2][0].icon);
+		chessBoard[5][0] = new Bishop("bBishop",5,0,1);//test
+		chessBoard[5][0].setImage();
+		chessBoard[5][0].icon.setBounds((chessBoard[5][0].x)*70+19,(chessBoard[5][0].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[5][0].icon);
+		
+		chessBoard[2][7] = new Bishop("wBishop",2,7,0);//test
+		chessBoard[2][7].setImage();
+		chessBoard[2][7].icon.setBounds((chessBoard[2][7].x)*70+19,(chessBoard[2][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[2][7].icon);
+		chessBoard[5][7] = new Bishop("wBishop",5,7,0);//test
+		chessBoard[5][7].setImage();
+		chessBoard[5][7].icon.setBounds((chessBoard[5][7].x)*70+19,(chessBoard[5][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[5][7].icon);
 		
 		color = new JPanel[8][8];
+		Color ncolor;//
+		ncolor = new Color(150,150,0,130);
 		for(int i = 0; i < 8; i ++){
 			for(int j = 0; j < 8; j ++){
+				
 				color[i][j] = new JPanel();
 				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
 				color[i][j].setSize(70, 70);
-				color[i][j].setBackground(new Color(0,191,255,80));
+				color[i][j].setBackground(ncolor);//
 				chessBoardpic.add(color[i][j]); 
 				color[i][j].setVisible(false);
 			}
@@ -212,6 +305,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
 				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
 					state = 2;
+					GameOver G = new GameOver();
+					G.setVisible(true);
 				}
 				else{
 					state = 0;
@@ -238,12 +333,21 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				
 				if(nowcamp == 0){
 					nowcamp = 1;
+					panel_2.setVisible(false);
+					panel_3.setVisible(true);
 				}
 				else if(nowcamp == 1){
 					nowcamp = 0;
+					panel_2.setVisible(true);
+					panel_3.setVisible(false);
 				}
 				
 			}else if(stateX == p.x && stateY == p.y){
+				for(int i = 0; i < 8; i ++){
+					for(int j = 0; j < 8; j ++){	
+						color[i][j].setVisible(false);//clear block
+					}
+				}
 				state = 0;				
 			}
 		}
@@ -273,8 +377,23 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	}
 	
 	//mycode
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 		state = 0;
     }
 	//mycode
+	private class GameOver extends JFrame implements ActionListener {
+		public GameOver() {
+			setSize(200, 100);
+			setLocation(350,350);
+			setLayout(new BorderLayout());
+			JLabel confirmLabel = new JLabel("G A M E   O V E R");
+			add(confirmLabel, BorderLayout.CENTER);
+			JButton exitButton = new JButton("Yes");
+			exitButton.addActionListener(this);
+			add(exitButton, BorderLayout.SOUTH);
+		}
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
+		}
+	}	
 }
