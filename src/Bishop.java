@@ -1,5 +1,14 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+
+
+import sun.audio.*;
 
 public class Bishop extends Chess {
 	
@@ -17,7 +26,48 @@ public class Bishop extends Chess {
 	
 	public void setImage()
 	{
+		if(camp==0){
+			chessPic = new ImageIcon("hero_final.jpg");
+			icon = new JLabel(chessPic);
+		}
+		else if(camp==1){
+			chessPic = new ImageIcon("nafarian_final.jpg");
+			icon = new JLabel(chessPic);
+		}
 		
+	}
+	public void setMusic(){
+		if(camp==0){
+			String song = "hero.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				AudioStream audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(camp==1){
+			String song = "nafarian.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				AudioStream audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    
 	}
 	public boolean[][] getReachableGrid(Chess[][] chessboard)
 	{
@@ -28,63 +78,79 @@ public class Bishop extends Chess {
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y-i>=0 && chessboard[x-i][y-i] == null)
+			if(x-i >= 0 && y-i>=0) //in the range
 			{
-				reachable[x-i][y-i] = true;
-			}
-			else if (chessboard[x-i][y-i].camp != camp)
-			{
-				reachable[x-i][y-i] = true;
-				break;
+				if(chessboard[x-i][y-i] == null) // reachable
+				{
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+					break;
+				}
+				else	break; 
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x-i >= 0 && y+i < 8 && chessboard[x-i][y+i] == null)
+			if(x-i >= 0 && y+i < 8 ) // in the range
 			{
-				reachable[x-i][y+i] = true;
-			}
-			else if (chessboard[x-i][y+i].camp != camp)
-			{
-				reachable[x-i][y+i] = true;
-				break;
+				if(chessboard[x-i][y+i] == null) //reachable
+				{
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+					break;
+				}	
+				else	break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y-i>=0 && chessboard[x+i][y-i] == null)
+			if(x+i < 8 && y-i>=0) //in the range
 			{
-				reachable[x+i][y-i] = true;
-			}
-			else if (chessboard[x+i][y-i].camp != camp)
-			{
-				reachable[x+i][y-i] = true;
-				break;
+				if(chessboard[x+i][y-i] == null) // reachable
+				{
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+					break;
+				}
+				else break;
 			}
 			
-			else break;
+			else	break;
 		}
 		
-		for(i=0; i<8; i++)
+		for(i=1; i<8; i++)
 		{
-			if(x+i < 8 && y+i < 8 && chessboard[x+i][y+i] == null)
+			if(x+i < 8 && y+i < 8) //in the range
 			{
-				reachable[x+i][y+i] = true;
+				if(chessboard[x+i][y+i] == null) // reachable
+				{
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+					break;
+				}
+				else	break;
 			}
-			else if (chessboard[x+i][y+i].camp != camp)
-			{
-				reachable[x+i][y+i] = true;
-				break;
-			}
-			
+					
 			else break;
 		}
 		
@@ -112,13 +178,4 @@ public class Bishop extends Chess {
 		
 		return reach;
 	}
- 
-	public JLabel icon;
-	public ImageIcon chessPic;
-	
-	protected int x,y;
-	protected String name;
-	protected boolean critical;
-	protected int weight;
-	protected int camp;
 }

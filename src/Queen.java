@@ -10,10 +10,9 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
-public class Rock extends Chess{
-	
-	
-	public Rock(String chessName,int x,int y,int camp){
+public class Queen extends Chess{
+
+	public Queen(String chessName,int x,int y,int camp){
 		
 		this.name = chessName;
 		this.x = x;
@@ -25,21 +24,20 @@ public class Rock extends Chess{
 		setImage();
 	}
 	
-	@Override
-	public void setImage() {
-		// TODO Auto-generated method stub
+	public void setImage()
+	{
 		if(camp==0){
-			chessPic = new ImageIcon("druid_final.jpg");
+			chessPic = new ImageIcon("sv_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("volcanicdrag_final.jpg");
+			chessPic = new ImageIcon("daughter_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}
 	public void setMusic(){
 		if(camp==0){
-			String song = "druid.wav";
+			String song = "sv.wav";
 			InputStream in;
 			try {
 				in = new FileInputStream(song);
@@ -54,7 +52,7 @@ public class Rock extends Chess{
 			}
 		}
 		else if(camp==1){
-			String song = "volcanodrag.wav";
+			String song = "daughter.wav";
 			InputStream in;
 			try {
 				in = new FileInputStream(song);
@@ -70,17 +68,16 @@ public class Rock extends Chess{
 		}
 	    
 	}
-
-	@Override
-	public boolean[][] getReachableGrid(Chess[][] chessboard) {
-		
+	public boolean[][] getReachableGrid(Chess[][] chessboard)
+	{
 		boolean reachable[][] = new boolean[8][8];
-	
+		
 		int i = 0,j = 0;
 		for(i=0;i<8;i++)
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
-
+		
+		//Rook
 		for(i=y+1;i<8;i++){
 			if(chessboard[x][i]==null){
 				reachable[x][i] = true;
@@ -125,71 +122,108 @@ public class Rock extends Chess{
 			}
 			else break;
 		}
-
+		
+		//Bishop		
+		
+		for(i=1; i<8; i++)
+		{
+			if(x-i >= 0 && y-i>=0) //in the range
+			{
+				if(chessboard[x-i][y-i] == null) // reachable
+				{
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+					break;
+				}
+				else	break; 
+			}
+			
+			else	break;
+		}
+		
+		for(i=1; i<8; i++)
+		{
+			if(x-i >= 0 && y+i < 8 ) // in the range
+			{
+				if(chessboard[x-i][y+i] == null) //reachable
+				{
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+					break;
+				}	
+				else	break;
+			}
+			
+			else	break;
+		}
+		
+		for(i=1; i<8; i++)
+		{
+			if(x+i < 8 && y-i>=0) //in the range
+			{
+				if(chessboard[x+i][y-i] == null) // reachable
+				{
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+					break;
+				}
+				else break;
+			}
+			
+			else	break;
+		}
+		
+		for(i=1; i<8; i++)
+		{
+			if(x+i < 8 && y+i < 8) //in the range
+			{
+				if(chessboard[x+i][y+i] == null) // reachable
+				{
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+					break;
+				}
+				else	break;
+			}
+					
+			else break;
+		}
+		
+		
 		reachable[x][y] = false;
 		
 		return reachable;
 	}
-
-	@Override
-	public boolean isReachable(Chess[][] chessboard, int lx, int ly) {
+	
+	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
+	{
+		boolean reach = false;
+		boolean[][] reachable;
+		int i, j;
 		
-		boolean res = false;
-		int i;
+		reachable = getReachableGrid(chessboard);
 		
-		if(x==lx||y==ly){
-			if(x==lx){
-				for(i=lx+1;i<8;i++){
-					if((chessboard[x][i]==null)){
-						if(i==ly)
-							res = true;
-					}else if(chessboard[x][i].camp!=camp){
-						if(i==ly){
-							res = true;
-							break;
-						}
-					}else break;
-				}
-				
-				for(i=lx-1;i>=0;i--){
-					if((chessboard[x][i]==null)){
-						if(i==ly)
-							res = true;
-					}else if(chessboard[x][i].camp!=camp){
-						if(i==ly){
-							res = true;
-							break;
-						}
-					}else break;
-				}
-			}
-			else{
-				for(i=ly+1;i<8;i++){
-					if((chessboard[i][y]==null)){
-						if(i==lx)
-							res = true;
-					}else if(chessboard[i][y].camp!=camp){
-						if(i==lx){
-							res = true;
-							break;
-						}
-					}else break;
-				}
-				for(i=ly-1;i>=0;i--){
-					if((chessboard[i][y]==null)){
-						if(i==lx)
-							res = true;
-					}else if(chessboard[i][y].camp!=camp){
-						if(i==lx){
-							res = true;
-							break;
-						}
-					}else break;
-				}
+		for(i=0; i<8; i++)
+		{
+			for(j=0; j<8; j++)
+			{
+				if (reachable[i][j] == true && Ix == i && Iy == j)
+					reach = true;
 			}
 		}
 		
-		return res;
+		return reach;
 	}
-
 }

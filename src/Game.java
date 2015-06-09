@@ -1,3 +1,4 @@
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -28,8 +29,10 @@ import javax.swing.JTextArea;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import java.awt.event.ActionListener;//
+import java.awt.event.ActionEvent;
 
-public class Game extends JFrame implements MouseListener{
+public class Game extends JFrame implements MouseListener , ActionListener{//test
 
 	private JPanel contentPane;
 	private JLabel chessBoardpic; 
@@ -43,6 +46,7 @@ public class Game extends JFrame implements MouseListener{
 	private int state;
 	private int nowcamp;
 	private int stateX, stateY;
+	JPanel[][] color;
 	//my code
 	
 	public static void main(String[] args) {
@@ -72,17 +76,11 @@ public class Game extends JFrame implements MouseListener{
 		DebugText.setBounds(5, 642, 824, 15);
 		DebugText.setVerticalAlignment(SwingConstants.BOTTOM);
 		contentPane.add(DebugText);
-		
-		
-//		JLabel test = new JLabel("");
-//		test.setBounds(24, 21, 94, 111);
-//		test.setIcon(new ImageIcon("test.jpg"));
-//		contentPane.add(test);
 
 		chessBoardpic = new JLabel("");
 		chessBoardpic.setBounds(5, 5, 605, 637);
 		chessBoardpic.setIcon(new ImageIcon("ChessBoard.png"));
-		contentPane.add(chessBoardpic);
+		contentPane.add(chessBoardpic);		
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
@@ -113,33 +111,58 @@ public class Game extends JFrame implements MouseListener{
 		history.setText("A1 -> A2");
 		panel_1.add(history);
 		
+
 		
-		
-		JMenu menu = new JMenu("主選單");
-		JMenuItem newGame = new JMenuItem("開新遊戲");
-		JMenuItem undo = new JMenuItem("毀棋");
-		JMenuItem surrender = new JMenuItem("投降");
-//		item1.addActionListener(new MyButtonListener());
-//		item2.addActionListener(new MyButtonListener());
+		JMenu menu = new JMenu("Menu");
+		JMenuItem newGame = new JMenuItem("Game Start");
+	//	JMenuItem undo = new JMenuItem("");
+	//	JMenuItem surrender = new JMenuItem("");
+		newGame.addActionListener(this);//test
+	//	item2.addActionListener(new MyButtonListener());
 		menu.add(newGame);
-		menu.add(undo);
-		menu.add(surrender);
-		JMenu mode = new JMenu("模式");
-		JMenuItem one = new JMenuItem("單人模式");
-		JMenuItem two = new JMenuItem("兩人對戰");
-		mode.add(one);
-		mode.add(two);
+	//	menu.add(undo);
+	//	menu.add(surrender);
+	//	JMenu mode = new JMenu("");
+	//	JMenuItem one = new JMenuItem("");
+	//	JMenuItem two = new JMenuItem("");
+	//	mode.add(one);
+	//	mode.add(two);
 		JMenuBar bar = new JMenuBar();
 		bar.add(menu);
-		bar.add(mode);
+	//	bar.add(mode);
 		this.setJMenuBar(bar);
 		this.setVisible(true);
-		
-		//my code ><	
+
+		//my code
 		
 		chessBoard = new Chess[8][8];
-		state = 0;//狀態初始化
-		nowcamp = 0;//陣營初始化
+		
+		chessBoard[4][7] = new King("wKing",4,7,0);//test
+		chessBoard[4][7].setImage();
+		chessBoard[4][7].icon.setBounds((chessBoard[4][7].x)*70+19,(chessBoard[4][7].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[4][7].icon);
+		
+		chessBoard[0][6] = new King("bKing",0,6,1);//test
+		chessBoard[0][6].setImage();
+		chessBoard[0][6].icon.setBounds((chessBoard[0][6].x)*70+19,(chessBoard[0][6].y)*70+39,70,70);
+		chessBoardpic.add(chessBoard[0][6].icon);
+		
+		color = new JPanel[8][8];
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){
+				color[i][j] = new JPanel();
+				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
+				color[i][j].setSize(70, 70);
+				color[i][j].setBackground(new Color(0,191,255,80));
+				chessBoardpic.add(color[i][j]); 
+				color[i][j].setVisible(false);
+			}
+		}
+		
+		chessBoardpic.repaint();
+		
+		state = 2;//first state=2
+		nowcamp = 0;//
 		stateX = -1;
 		stateY = -1;
 		//my code ><
@@ -160,49 +183,72 @@ public class Game extends JFrame implements MouseListener{
 		
 		Point p = determineGrid(e.getX(),e.getY());
 		//my code:)
-
-		JPanel color = new JPanel();
-		color.setLocation(e.getX(), e.getY());
-		color.setSize(70, 70);
-		color.setBackground(Color.YELLOW);
-		chessBoardpic.add(color); 
-		color.setVisible(false);
-		chessBoardpic.repaint();
 		
 		if(state == 0){
+
 			boolean[][] boardAvailable;
 			if(p.x <=7 && p.y <= 7 && chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].camp() == nowcamp){
+				
 				boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
+				System.out.println(chessBoard[p.x][p.y].name);//test
+				System.out.println("camp:"+nowcamp);//test
+				
 				for(int i = 0; i < 8; i ++){
 					for(int j = 0; j < 8; j ++){
-						if(boardAvailable[i][j] = true){
-							//加辨識符號到圖上
-							
+						//System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
+						if(boardAvailable[i][j] == true){
+							color[i][j].setVisible(true);
 						}
 					}
 				}
+				chessBoardpic.repaint();
+				
 				stateX = p.x;
 				stateY = p.y;
-				state = 1;//進入下一個狀態
+				state = 1;
 			}
 
 		}else if(state == 1){
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
-				if(chessBoard[stateX][stateY].isCritical()){//吃國王
-					// gameover
-					state = 2;//結束狀態
+				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
+					state = 2;
 				}
-				chessBoard[stateX][stateY] = chessBoard[p.x][p.y];
-				chessBoard[p.x][p.y] = null;//
-				state = 0;//回到上一個狀態
+				else{
+					state = 0;
+				}
+				
+				for(int i = 0; i < 8; i ++){
+					for(int j = 0; j < 8; j ++){	
+						color[i][j].setVisible(false);//clear block
+					}
+				}
+				if(chessBoard[p.x][p.y] != null){
+					chessBoard[p.x][p.y].icon.setIcon(null);//clear picture
+				}
+				chessBoard[stateX][stateY].icon.setIcon(null);//clear picture
+				
+				chessBoard[stateX][stateY].moveXY(p.x,p.y);
+				chessBoard[p.x][p.y] = chessBoard[stateX][stateY];
+				chessBoard[stateX][stateY] = null;//
+				
+				chessBoard[p.x][p.y].setImage();//
+				chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
+				chessBoardpic.add(chessBoard[p.x][p.y].icon);
+				chessBoardpic.repaint();
+				
+				if(nowcamp == 0){
+					nowcamp = 1;
+				}
+				else if(nowcamp == 1){
+					nowcamp = 0;
+				}
 				
 			}else if(stateX == p.x && stateY == p.y){
-				state = 0;//回到上一個狀態
-				
+				state = 0;				
 			}
 		}
 		//my code
-		
+		System.out.println("state="+state);//test
 		//DEBUG
 		debugMessage = new String("Clicked. X is: " + e.getX() + " Y is: " + e.getY() + ". Grid is :[" + p.x + "," + p.y +"]");
 		DebugText.setText(debugMessage);
@@ -225,4 +271,10 @@ public class Game extends JFrame implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		
 	}
+	
+	//mycode
+	public void actionPerformed(ActionEvent e) {
+		state = 0;
+    }
+	//mycode
 }
