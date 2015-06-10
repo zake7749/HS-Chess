@@ -9,19 +9,16 @@ public class AI {
 	
 	private boolean strikeFever;
 	private int camp;
-	private Chess tc;
 	private Stack bestChoices;
 	private Point move;
 	private int score;
 	private int bestX,bestY;
 	private int depth;
-	private int thiscamp;
 	private Chess[][] cloneBoard;
 	
 	public AI(int camp){
 		score = 0;
 		this.camp = camp;
-		thiscamp = camp;
 		depth = 8;
 		cloneBoard = new Chess[8][8];
 	}
@@ -41,62 +38,97 @@ public class AI {
 	}
 	
 	public Point getChoice(){
+		move = new Point(bestX,bestY);
 		return move;
 	}
 	
-	private int MiniMax(int d){
+	private int MiniMax(int d, boolean Computer){
 	
 		int i,j,k,l;
+		int score = 0;
+		int bestChoiceforC = -999999;
+		int bestChoiceforP = 999999;
 		boolean[][] mr;
 		if(d < depth){
-			if(thiscamp == camp){//Get MAX
-				thiscamp++;
-				int max = -9999;
-				for(i=0;i<8;i++){
-					for(j=0;j<8;j++){
-						if(cloneBoard[i][j]!=null&&cloneBoard[i][j].camp==camp){
-							mr = cloneBoard[i][j].getReachableGrid(cloneBoard);
-							for(k=0;k<8;k++){
-								for(l=0;l<8;l++){
-									if(mr[k][l]==true){
-										if(cloneBoard[k][l]!=null){
-											score = MiniMax(d-1);
+			for(i=0;i<8;i++){
+				for(j=0;j<8;j++){
+					if(cloneBoard[i][j]!=null){
+						//There is a chess.
+						//generate all steps of focused chess.
+						mr = cloneBoard[i][j].getReachableGrid(cloneBoard);
+						for(k=0;k<8;k++){
+							for(l=0;l<8;l++){
+								if(mr[k][l]){
+									Chess tc = null;
+									if(cloneBoard[k][l]!=null){
+										//Store the chess is goind to remove.
+											tc = cloneBoard[k][l];
+									}
+									//Store the chess I focused, i.e chess[i][j].
+									Chess fc = cloneBoard[i][j];
+									//Move focused chess from i,j to k,l;
+									cloneBoard[k][l] = cloneBoard[i][j];
+									cloneBoard[i][j] = null;
+									if(Computer){
+										score = MiniMax(d+1,false);
+									}
+									else{
+										score = MiniMax(d+1,true);
+									}
+									
+									if(tc!=null){
+										cloneBoard[k][l] = tc;
+									}
+									cloneBoard[i][j] = fc;
+									
+									if(Computer){
+										if(score>bestChoiceforC){
+											bestChoiceforC = score;
+											bestX = k;
+											bestY = l;
 										}
-
+									}
+									else{
+										if(score<bestChoiceforP){
+											bestChoiceforP = score;
+										}
 									}
 								}
 							}
-							
 						}
 					}
 				}
 			}
-			else{//Get Min
-				thiscamp--;
-				int Min = 9999;
-				for(i=0;i<8;i++){
-					for(j=0;j<8;j++){
-						if(cloneBoard[i][j]!=null&&cloneBoard[i][j].camp!=camp){
-							mr = cloneBoard[i][j].getReachableGrid(cloneBoard);
-							for(k=0;k<8;k++){
-								for(l=0;l<8;l++){
-									if(mr[k][l]==true){
-										
-									}
-								}
-							}
-						}
-					}
-				}	
+			if(Computer){
+				return bestChoiceforC;
+			}
+			else{
+				return bestChoiceforP;
 			}
 		}
 		else{
-			return score;
+			return survey(cloneBoard);
 		}
-		return 1;
-		
 	}
 	
+	private int survey(Chess[][] cB) {
+		int i,j;
+		int score = 0;
+		for(i=0;i<8;i++){
+			for(j=0;j<8;j++){
+				if(cB[i][j]!=null){
+					if(cB[i][j].camp==camp){
+						score += cB[i][j].getWeight();
+					}
+					else{
+						score -= cB[i][j].getWeight();
+					}
+				}
+			}
+		}
+		return score;
+	}
+
 	public void changeImage(JLabel lbl){
 		
 	}
@@ -104,6 +136,4 @@ public class AI {
 	public void say(JTextPane txt){
 		
 	}
-	
-
 }
