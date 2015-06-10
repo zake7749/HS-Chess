@@ -102,25 +102,28 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(620, 391, 229, 230);
+		panel_1.setBounds(620, 390, 230, 230);
+		panel_1.setLayout(null);
 		contentPane.add(panel_1);
 		
-		panel_2 = new JPanel();//
+		panel_2 = new JPanel();		
 		JTextArea campName = new JTextArea();
-		campName.setBounds(620, 391, 229, 230);
+		campName.setBackground(Color.BLACK);
 		Font font = new Font("Verdana", Font.BOLD, 20);
 		campName.setFont(font);
-		campName.setForeground(Color.BLUE);
+		campName.setForeground(Color.white);
 		campName.setText("Humans Alliance");
+		panel_2.setBounds(10, 95, 210, 40);
 		panel_2.add(campName);
 		panel_1.add(panel_2);//
 		
 		panel_3 = new JPanel();//
 		JTextArea campName2 = new JTextArea();
-		campName2.setBounds(620, 391, 229, 230);
+		campName2.setBackground(Color.BLACK);
 		campName2.setFont(font);
-		campName2.setForeground(Color.BLUE);
+		campName2.setForeground(Color.white);
 		campName2.setText("Dark Dragon");
+		panel_3.setBounds(10, 95, 210, 40);
 		panel_3.add(campName2);
 		panel_1.add(panel_3);//
 		panel_3.setVisible(false);
