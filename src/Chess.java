@@ -1,5 +1,6 @@
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import sun.audio.*;
 
 public abstract class Chess implements Cloneable{
 	
@@ -61,9 +62,11 @@ public abstract class Chess implements Cloneable{
 	}
 	public abstract void setImage();
 	public abstract void setMusic();
+	public abstract void setMusicDead();
 	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);
 	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
  
+	public AudioStream audioStream;
 	public JLabel icon;
 	public ImageIcon chessPic;
 	

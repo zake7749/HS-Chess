@@ -43,12 +43,13 @@ public class Rock extends Chess implements Cloneable{
 		}
 	}
 	public void setMusic(){
+		AudioPlayer.player.stop(audioStream);
 		if(camp==0){
 			String song = "druid.wav";
 			InputStream in;
 			try {
 				in = new FileInputStream(song);
-				AudioStream audioStream = new AudioStream(in);
+				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -63,7 +64,41 @@ public class Rock extends Chess implements Cloneable{
 			InputStream in;
 			try {
 				in = new FileInputStream(song);
-				AudioStream audioStream = new AudioStream(in);
+				audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	    
+	}
+	public void setMusicDead(){
+		AudioPlayer.player.stop(audioStream);
+		if(camp==0){
+			String song = "druid_dead.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				audioStream = new AudioStream(in);
+				AudioPlayer.player.start(audioStream);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(camp==1){
+			String song = "volcanodrag_dead_final.wav";
+			InputStream in;
+			try {
+				in = new FileInputStream(song);
+				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
