@@ -15,6 +15,18 @@ public class Knight extends Chess{
 	int[] moveX = {-2,-1,1,2,-2,-1,1,2};
 	int[] moveY = {1,2,2,1,-1,-2,-2,-1};
 	
+	public Knight(String chessName, int x, int y, int camp) {
+		
+		this.name = chessName;
+		this.x = x;
+		this.y = y;
+		this.camp = camp;
+		this.critical = false;
+		this.weight = 0;
+		
+		setImage();
+	}
+	
 	@Override
 	public void setImage() {
 		// TODO Auto-generated method stub
@@ -82,22 +94,24 @@ public class Knight extends Chess{
 	}
 
 	@Override
-	public boolean isReachable(Chess[][] chessboard, int lx, int ly) {
+	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
+	{
+		boolean reach = false;
+		boolean[][] reachable;
+		int i, j;
 		
-		int i;
-		boolean res;
-		for(i=0;i<8;i++){
-			if(x+moveX[i]>=0&&x+moveX[i]<8&&y+moveY[i]>=0&&y+moveY[i]<8){
-				if(x+moveX[i]==lx&&y+moveY[i]==ly){
-					if(chessboard[lx][ly]==null){
-						res = true;
-					}else if(chessboard[lx][ly].camp!=camp){
-						res = true;
-					}
-				}
+		reachable = getReachableGrid(chessboard);
+		
+		for(i=0; i<8; i++)
+		{
+			for(j=0; j<8; j++)
+			{
+				if (reachable[i][j] == true && Ix == i && Iy == j)
+					reach = true;
 			}
 		}
-		return res;
+		
+		return reach;
 	}
 
 }

@@ -18,7 +18,7 @@ public class King extends Chess{
 		this.x = x;
 		this.y = y;
 		this.camp = camp;
-		this.critical = false;
+		this.critical = true;
 		this.weight = 0;
 		
 		setImage();
