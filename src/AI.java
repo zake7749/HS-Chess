@@ -11,13 +11,12 @@ public class AI {
 	private int camp;
 	private Stack bestChoices;
 	private Point move;
-	private int score;
+
 	private int bestX,bestY;
 	private int depth;
 	private Chess[][] cloneBoard;
 	
 	public AI(int camp){
-		score = 0;
 		this.camp = camp;
 		depth = 8;
 		cloneBoard = new Chess[8][8];
@@ -45,14 +44,16 @@ public class AI {
 	private int MiniMax(int d, boolean Computer){
 	
 		int i,j,k,l;
+		int thiscamp = Computer ? 0 : 1;
 		int score = 0;
 		int bestChoiceforC = -999999;
 		int bestChoiceforP = 999999;
+
 		boolean[][] mr;
 		if(d < depth){
 			for(i=0;i<8;i++){
 				for(j=0;j<8;j++){
-					if(cloneBoard[i][j]!=null){
+					if(cloneBoard[i][j]!=null&&cloneBoard[i][j].camp == thiscamp){
 						//There is a chess.
 						//generate all steps of focused chess.
 						mr = cloneBoard[i][j].getReachableGrid(cloneBoard);
