@@ -10,7 +10,7 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
-public class Knight extends Chess{
+public class Knight extends Chess implements Cloneable{
 
 	int[] moveX = {-2,-1,1,2,-2,-1,1,2};
 	int[] moveY = {1,2,2,1,-1,-2,-2,-1};
@@ -22,9 +22,14 @@ public class Knight extends Chess{
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
-		this.weight = 0;
+		this.weight = 12;
 		
 		setImage();
+	}
+	
+	public Knight clone(){
+		Knight k = new Knight(this.name,this.x,this.y,this.camp);
+		return k;
 	}
 	
 	@Override

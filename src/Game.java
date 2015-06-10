@@ -286,6 +286,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				System.out.println(chessBoard[p.x][p.y].name);//test
 				System.out.println("camp:"+nowcamp);//test
 				
+				chessBoard[p.x][p.y].setMusic();
+				color[p.x][p.y].setVisible(true);
+				
 				for(int i = 0; i < 8; i ++){
 					for(int j = 0; j < 8; j ++){
 						//System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
@@ -302,6 +305,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			}
 
 		}else if(state == 1){
+							System.out.println(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y));//
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
 				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
 					state = 2;
@@ -395,5 +399,5 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
 		}
-	}	
+	}
 }

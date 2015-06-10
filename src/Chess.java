@@ -1,7 +1,7 @@
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class Chess {
+public abstract class Chess implements Cloneable{
 	
 	public Chess(){
 		
@@ -56,7 +56,9 @@ public abstract class Chess {
 		return this.critical;
 	}
 	
-	
+	public Chess clone(){
+		return this;
+	}
 	public abstract void setImage();
 	public abstract void setMusic();
 	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);

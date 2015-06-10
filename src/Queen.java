@@ -10,7 +10,7 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
-public class Queen extends Chess{
+public class Queen extends Chess implements Cloneable{
 
 	public Queen(String chessName,int x,int y,int camp){
 		
@@ -19,9 +19,14 @@ public class Queen extends Chess{
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
-		this.weight = 0;
+		this.weight = 28;
 		
 		setImage();
+	}
+	
+	public Queen clone(){
+		Queen k = new Queen(this.name,this.x,this.y,this.camp);
+		return k;
 	}
 	
 	public void setImage()

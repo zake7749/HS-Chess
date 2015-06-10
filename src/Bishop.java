@@ -19,7 +19,7 @@ public class Bishop extends Chess {
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
-		this.weight = 0;
+		this.weight = 16;
 		
 		setImage();
 	}

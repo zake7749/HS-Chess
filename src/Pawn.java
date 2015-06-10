@@ -10,7 +10,7 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
-public class Pawn extends Chess{
+public class Pawn extends Chess implements Cloneable{
 
 	
 	public Pawn(String chessName,int x,int y,int camp){
@@ -20,9 +20,14 @@ public class Pawn extends Chess{
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
-		this.weight = 0;
+		this.weight = 8;
 		
 		setImage();
+	}
+	
+	public Pawn clone(){
+		Pawn k = new Pawn(this.name,this.x,this.y,this.camp);
+		return k;
 	}
 	
 	
