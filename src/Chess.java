@@ -70,6 +70,7 @@ public abstract class Chess implements Cloneable{
 	protected int x,y;
 	protected String name;
 	protected boolean critical;
+	protected boolean firstStep;
 	protected int weight;
 	protected int camp;
 }
