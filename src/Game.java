@@ -4,6 +4,11 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -24,12 +29,17 @@ import javax.swing.JTextPane;
 import javax.swing.border.CompoundBorder;
 
 import java.awt.Font;
+
 import javax.swing.JTextArea;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+
 import java.awt.event.ActionListener;//
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JButton;//
 
 public class Game extends JFrame implements MouseListener , ActionListener{//test
@@ -52,6 +62,26 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	//my code
 	
 	public static void main(String[] args) {
+		try {
+			Clip clip=AudioSystem.getClip();
+			AudioInputStream audioStream=AudioSystem.getAudioInputStream(new File("bgm.wav"));
+			clip.open(audioStream);
+			clip.start();
+			clip.loop(Clip.LOOP_CONTINUOUSLY);
+			Thread.sleep(1000);//looping as long as this thread alive
+		} catch (LineUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
