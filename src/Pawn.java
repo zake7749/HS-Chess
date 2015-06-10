@@ -12,6 +12,8 @@ import sun.audio.AudioStream;
 
 public class Pawn extends Chess implements Cloneable{
 
+	boolean isKing;
+	boolean firstStep;
 	
 	public Pawn(String chessName,int x,int y,int camp){
 		
@@ -21,6 +23,8 @@ public class Pawn extends Chess implements Cloneable{
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 8;
+		this.isKing = false;
+		this.firstStep = true;
 		
 		setImage();
 	}
@@ -84,41 +88,66 @@ public class Pawn extends Chess implements Cloneable{
 		for(i=0;i<8;i++)
 			for(j=0;j<8;j++)
 				reachable[i][j] = false;
-		if(camp==0){
-			//Human
-			if(x-1>=0&&y-1>=0){
-				if(chessboard[x-1][y-1]!=null&&chessboard[x-1][y-1].camp!=camp){
-					reachable[x-1][y-1] = true;
+		if(!isKing){
+			if(camp==0){
+				if(y==0){
+					isKing = true;
+				}
+				//Human
+				if(x-1>=0&&y-1>=0){
+					if(chessboard[x-1][y-1]!=null&&chessboard[x-1][y-1].camp!=camp){
+						reachable[x-1][y-1] = true;
+					}
+				}
+				if(x+1<8&&y-1>=0){
+					if(chessboard[x+1][y-1]!=null&&chessboard[x+1][y-1].camp!=camp){
+						reachable[x+1][y-1] = true;
+					}
+				}
+				if(y-1>=0){
+					if(chessboard[x][y-1]==null)
+						reachable[x][y-1] = true;
+				}
+				if(firstStep==true){
+					reachable[x][y-2] = true;
 				}
 			}
-			if(x+1<8&&y-1>=0){
-				if(chessboard[x+1][y-1]!=null&&chessboard[x+1][y-1].camp!=camp){
-					reachable[x+1][y-1] = true;
+			else{
+				if(y==7){
+					isKing = true;
+				}
+				//Dragon
+				if(x-1>=0&&y+1<8){
+					if(chessboard[x-1][y+1]!=null&&chessboard[x-1][y+1].camp!=camp){
+						reachable[x-1][y+1] = true;
+					}
+				}
+				if(x+1<8&&y+1<8){
+					if(chessboard[x+1][y+1]!=null&&chessboard[x+1][y+1].camp!=camp){
+						reachable[x+1][y+1] = true;
+					}
+				}
+				if(y+1<8){
+					if(chessboard[x][y+1]==null)
+						reachable[x][y+1] = true;
+				}
+				if(firstStep==true){
+					reachable[x][y+2] = true;
 				}
 			}
-			if(y-1>=0){
-				if(chessboard[x][y-1]==null)
-					reachable[x][y-1] = true;
-			}
-			
 		}
 		else{
-			//Dragon
-			if(x-1>=0&&y+1<8){
-				if(chessboard[x-1][y+1]!=null&&chessboard[x-1][y+1].camp!=camp){
-					reachable[x-1][y+1] = true;
+			for(i=x-1;i<=x+1;i++){
+				for(j=y-1;j<=y+1;j++){
+					if(i>=0&&j>=0&&i<8&&j<8)
+					{
+						if(chessboard[i][j]==null)
+							reachable[i][j] = true;
+						else if(chessboard[i][j].camp!=camp)
+							reachable[i][j] = true;
+					}
 				}
 			}
-			if(x+1<8&&y+1<8){
-				if(chessboard[x+1][y+1]!=null&&chessboard[x+1][y+1].camp!=camp){
-					reachable[x+1][y+1] = true;
-				}
-			}
-			if(y+1<8){
-				if(chessboard[x][y+1]==null)
-					reachable[x][y+1] = true;
-			}
-			
 		}
 		return reachable;
 	}
@@ -127,7 +156,6 @@ public class Pawn extends Chess implements Cloneable{
 	public boolean isReachable(Chess[][] chessboard, int lx, int ly) {
 		
 		boolean[][] res = this.getReachableGrid(chessboard);
-	
 		return res[lx][ly];
 	}
 
