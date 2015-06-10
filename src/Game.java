@@ -143,6 +143,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		campName.setFont(font);
 		campName.setForeground(Color.white);
 		campName.setText("Humans Alliance");
+		campName.setEditable(false);
 		panel_2.setBounds(10, 95, 210, 40);
 		panel_2.add(campName);
 		panel_1.add(panel_2);//
@@ -153,6 +154,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		campName2.setFont(font);
 		campName2.setForeground(Color.white);
 		campName2.setText("Dark Dragon");
+		campName2.setEditable(false);
 		panel_3.setBounds(10, 95, 210, 40);
 		panel_3.add(campName2);
 		panel_1.add(panel_3);//
