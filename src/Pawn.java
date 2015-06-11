@@ -23,7 +23,7 @@ public class Pawn extends Chess implements Cloneable{
 		this.critical = false;
 		this.weight = 8;
 		this.isKing = false;
-		this.firstStep = true;
+		firstStep = true;
 		
 		setImage();
 	}
