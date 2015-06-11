@@ -426,6 +426,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	}
 	
 	private void AIstep(){
+		
+			boolean GG = false;
 			
 			chessBoardpic.repaint();
 			ai.setChessBoard(chessBoard);
@@ -438,6 +440,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			if(chessBoard[m.x][m.y] != null){
 				chessBoard[m.x][m.y].icon.setIcon(null);//clear picture
 				chessBoard[m.x][m.y].setMusicDead();
+				if(chessBoard[m.x][m.y].isCritical())
+					GG = true;
 			}
 			System.out.println("SX:"+s.x);
 			System.out.println("SY:"+s.y);
@@ -447,12 +451,18 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			chessBoard[s.x][s.y].setFirstStep(false);
 			chessBoard[s.x][s.y].moveXY(m.x,m.y);
 			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
-			chessBoard[s.x][s.y] = null;//
+			chessBoard[s.x][s.y] = null;
 			
-			chessBoard[m.x][m.y].setImage();//
+			chessBoard[m.x][m.y].setImage();
 			chessBoard[m.x][m.y].icon.setBounds((m.x)*70+19,(m.y)*70+39,70,70);
 			chessBoardpic.add(chessBoard[m.x][m.y].icon);
 			chessBoardpic.repaint();
+			
+			if(GG){
+				GameOver G = new GameOver();
+				G.setVisible(true);
+				state = 2;
+			}
 			
 			nowcamp = 0;
 			panel_2.setVisible(true);
