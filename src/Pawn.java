@@ -150,8 +150,9 @@ public class Pawn extends Chess implements Cloneable{
 					if(chessboard[x][y-1]==null)
 						reachable[x][y-1] = true;
 				}
-				if(firstStep==true){
-					reachable[x][y-2] = true;
+				if(firstStep){
+					if(chessboard[x][y-1]==null)
+						reachable[x][y-2] = true;
 				}
 			}
 			else{
@@ -173,10 +174,8 @@ public class Pawn extends Chess implements Cloneable{
 					if(chessboard[x][y+1]==null)
 						reachable[x][y+1] = true;
 				}
-				if(firstStep==true){
-					if(chessboard[x][y+2]==null)
-						reachable[x][y+2] = true;
-					else if(chessboard[x][y+2].camp!=this.camp)
+				if(firstStep){
+					if(chessboard[x][y+1]==null)
 						reachable[x][y+2] = true;
 				}
 			}
