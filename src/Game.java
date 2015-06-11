@@ -442,6 +442,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	
 	private void AIstep(){
 
+			boolean GG = false;
+			chessBoardpic.repaint();
+			
 			ai.setChessBoard(chessBoard);
 			ai.MiniMax(0, true);
 			Point m = ai.getChoice();
@@ -452,12 +455,15 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			if(chessBoard[m.x][m.y] != null){
 				chessBoard[m.x][m.y].icon.setIcon(null);//clear picture
 				chessBoard[m.x][m.y].setMusicDead();
+				if(chessBoard[m.x][m.y].isCritical())
+					GG = true;
 			}
 			System.out.println("SX:"+s.x);
 			System.out.println("SY:"+s.y);
 			System.out.println("MX:"+m.x);
 			System.out.println("MY:"+m.y);
 			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
+			chessBoard[s.x][s.y].setFirstStep(false);
 			
 			int temp1 = 8 - s.y;
 			int temp2 = 8 - m.y;
@@ -472,6 +478,12 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			chessBoardpic.add(chessBoard[m.x][m.y].icon);
 			chessBoardpic.repaint();
 			
+			if(GG){
+				GameOver G = new GameOver();
+				G.setVisible(true);
+				state = 2;
+			}
+						
 			if(chessBoard[m.x][m.y].getFirstStep()){
 				chessBoard[m.x][m.y].setFirstStep(false);
 			}
