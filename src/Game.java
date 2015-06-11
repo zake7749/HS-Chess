@@ -50,15 +50,16 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private JLabel MilesEdgeworth;
 	private JTextPane textPane;
 	private String debugMessage;
-	private Chess[][] chessBoard;
+	private Chess[][] chessBoard,bChessBoard,wChessBoard,oChessBoard;
 
 	private AI ai;
 	private boolean notDual;
-	private JPanel panel_2,panel_3;
+	private JPanel panel_2,panel_3,panel_4;
 	//my code
 	private int state;
 	private int nowcamp;
 	private int stateX, stateY;
+	JTextArea history;
 	JPanel[][] color;
 	//my code
 	
@@ -159,26 +160,29 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_1.add(panel_3);//
 		panel_3.setVisible(false);
 		
+		panel_4 = new JPanel();//
+		history = new JTextArea();
+		history.setBackground(Color.BLACK);
+		history.setFont(font);
+		history.setForeground(Color.white);
+		history.setText("Record");
+		history.setEditable(false);
+		panel_4.setBounds(10, 30, 210, 90);
+		panel_4.add(history);
+		panel_1.add(panel_4);//
+		
 		JMenu menu = new JMenu("Menu");
 		JMenuItem newGame = new JMenuItem("Dual");
 		JMenuItem vsCom = new JMenuItem("vs Com");
-	//	JMenuItem undo = new JMenuItem("");
-	//	JMenuItem surrender = new JMenuItem("");
+		JMenuItem undo = new JMenuItem("UNDO");
 		newGame.addActionListener(this);//test
 		vsCom.addActionListener(this);
-	//	item2.addActionListener(new MyButtonListener());
+		undo.addActionListener(this);
 		menu.add(newGame);
 		menu.add(vsCom);
-	//	menu.add(undo);
-	//	menu.add(surrender);
-	//	JMenu mode = new JMenu("");
-	//	JMenuItem one = new JMenuItem("");
-	//	JMenuItem two = new JMenuItem("");
-	//	mode.add(one);
-	//	mode.add(two);
+		menu.add(undo);
 		JMenuBar bar = new JMenuBar();
 		bar.add(menu);
-	//	bar.add(mode);
 		this.setJMenuBar(bar);
 		this.setVisible(true);
 
@@ -212,6 +216,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private void buildChessboard(){
 		
 		chessBoard = new Chess[8][8];
+		bChessBoard = new Chess[8][8];
+		wChessBoard = new Chess[8][8];
+		oChessBoard = new Chess[8][8];
 		
 		chessBoard[4][7] = new King("wKing",4,7,0);//test
 		chessBoard[4][7].setImage();
@@ -300,6 +307,12 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoard[5][7].setImage();
 		chessBoard[5][7].icon.setBounds((chessBoard[5][7].x)*70+19,(chessBoard[5][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[5][7].icon);
+		
+		for(int i = 0; i < 8; i++){
+			for(int j = 0; j < 8; j++){
+				oChessBoard[i][j] = chessBoard[i][j];
+			}
+		}
 	}
 	
 	private Point determineGrid(int x,int y){ 
@@ -317,8 +330,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		Point p = determineGrid(e.getX(),e.getY());
 
-
-
 			if(state == 0){
 	
 				boolean[][] boardAvailable;
@@ -327,7 +338,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 					boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
 					
 					chessBoard[p.x][p.y].setMusic();
-					color[p.x][p.y].setVisible(true);
 					
 					showPath(boardAvailable);
 					chessBoardpic.repaint();
@@ -360,9 +370,15 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 						chessBoard[p.x][p.y].setMusicDead();
 					}
 					
+					setLastChessBoard(nowcamp);
+					
 					chessBoard[stateX][stateY].moveXY(p.x,p.y);
 					chessBoard[p.x][p.y] = chessBoard[stateX][stateY];
 					chessBoard[stateX][stateY] = null;//
+					
+					int temp1 = 8 - stateY;
+					int temp2 = 8 - p.y;
+					history.setText(""+intToChar(stateX)+temp1+" ---> "+intToChar(p.x)+temp2);
 					
 					chessBoard[p.x][p.y].setImage();//
 					chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
@@ -388,7 +404,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 							panel_3.setVisible(false);
 						}
 					}
-					chessBoardpic.repaint();
 					
 				}else if(chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp == chessBoard[stateX][stateY].camp){
 					clearPath();
@@ -426,10 +441,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	}
 	
 	private void AIstep(){
-		
-			boolean GG = false;
-			
-			chessBoardpic.repaint();
+
 			ai.setChessBoard(chessBoard);
 			ai.MiniMax(0, true);
 			Point m = ai.getChoice();
@@ -440,30 +452,29 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			if(chessBoard[m.x][m.y] != null){
 				chessBoard[m.x][m.y].icon.setIcon(null);//clear picture
 				chessBoard[m.x][m.y].setMusicDead();
-				if(chessBoard[m.x][m.y].isCritical())
-					GG = true;
 			}
 			System.out.println("SX:"+s.x);
 			System.out.println("SY:"+s.y);
 			System.out.println("MX:"+m.x);
 			System.out.println("MY:"+m.y);
 			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
-			chessBoard[s.x][s.y].setFirstStep(false);
+			
+			int temp1 = 8 - s.y;
+			int temp2 = 8 - m.y;
+			history.setText(""+intToChar(s.x)+temp1+" ---> "+intToChar(m.x)+temp2);
+			
 			chessBoard[s.x][s.y].moveXY(m.x,m.y);
 			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
-			chessBoard[s.x][s.y] = null;
+			chessBoard[s.x][s.y] = null;//
 			
-			chessBoard[m.x][m.y].setImage();
+			chessBoard[m.x][m.y].setImage();//
 			chessBoard[m.x][m.y].icon.setBounds((m.x)*70+19,(m.y)*70+39,70,70);
 			chessBoardpic.add(chessBoard[m.x][m.y].icon);
 			chessBoardpic.repaint();
 			
-			if(GG){
-				GameOver G = new GameOver();
-				G.setVisible(true);
-				state = 2;
+			if(chessBoard[m.x][m.y].getFirstStep()){
+				chessBoard[m.x][m.y].setFirstStep(false);
 			}
-			
 			nowcamp = 0;
 			panel_2.setVisible(true);
 			panel_3.setVisible(false);
@@ -477,6 +488,23 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			}
 		}
 	}
+	
+	private void setLastChessBoard(int ncamp){
+				if(nowcamp == 0){
+					for(int i = 0; i < 8; i++){
+						for(int j = 0; j < 8; j++){
+							wChessBoard[i][j] = chessBoard[i][j];
+						}
+					}
+				}
+				else if(nowcamp == 1){
+					for(int i = 0; i < 8; i++){
+						for(int j = 0; j < 8; j++){
+							bChessBoard[i][j] = chessBoard[i][j];
+						}
+					}
+				}
+	}	
 
 	public void mouseEntered(MouseEvent e) {
 		
@@ -502,8 +530,90 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			ai = new AI(1);
 			notDual = true;
 		}
-		
+		if(item.getText()=="UNDO" && state == 0){
+			if(nowcamp == 0){
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(wChessBoard[i][j] != chessBoard[i][j]){
+							if(chessBoard[i][j] != null){
+								chessBoard[i][j].icon.setIcon(null);//clear picture
+							}
+						}
+					}
+				}
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(wChessBoard[i][j] != chessBoard[i][j]){
+							chessBoard[i][j] = wChessBoard[i][j];
+							if(wChessBoard[i][j] != null){
+								chessBoard[i][j].moveXY(i,j);
+								chessBoard[i][j].setImage();//
+								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
+								chessBoardpic.add(chessBoard[i][j].icon);
+								chessBoardpic.repaint();
+								if(wChessBoard[i][j].getFirstStep()){
+									chessBoard[i][j].setFirstStep(true);
+								}
+							}
+						}
+					}
+				}
+			}
+			else if(nowcamp == 1){
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(bChessBoard[i][j] != chessBoard[i][j]){
+							if(chessBoard[i][j] != null){
+								chessBoard[i][j].icon.setIcon(null);//clear picture
+							}
+						}
+					}
+				}
+				for(int i = 0; i < 8; i++){
+					for(int j = 0; j < 8; j++){
+						if(bChessBoard[i][j] != chessBoard[i][j]){
+							chessBoard[i][j] = bChessBoard[i][j];
+							if(bChessBoard[i][j] != null){
+								chessBoard[i][j].moveXY(i,j);
+								chessBoard[i][j].setImage();//
+								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
+								chessBoardpic.add(chessBoard[i][j].icon);
+								chessBoardpic.repaint();
+								if(bChessBoard[i][j].getFirstStep()){
+									chessBoard[i][j].setFirstStep(true);
+								}
+							}
+						}
+					}
+				}		
+			}
+		}
     }
+	
+	public char intToChar(int inputInt){
+		switch(inputInt){
+			case 0:
+				return 'A';
+			case 1:
+				return 'B';
+			case 2:
+				return 'C';
+			case 3:
+				return 'D';
+			case 4:
+				return 'E';
+			case 5:
+				return 'F';
+			case 6:
+				return 'G';
+			case 7:
+				return 'H';
+			default:
+				System.out.println("GO TO DEFAULT");
+		}
+		return '5';
+	}
+
 	//mycode
 	private class GameOver extends JFrame implements ActionListener {
 		public GameOver() {
