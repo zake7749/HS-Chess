@@ -13,12 +13,13 @@ public class AI {
 	private Point move;
 
 	private int bestX,bestY;
+	private int selectX,selectY;
 	private int depth;
 	private Chess[][] cloneBoard;
 	
 	public AI(int camp){
 		this.camp = camp;
-		depth = 8;
+		depth = 4;
 		cloneBoard = new Chess[8][8];
 	}
 	
@@ -41,13 +42,18 @@ public class AI {
 		return move;
 	}
 	
-	private int MiniMax(int d, boolean Computer){
+	public Point getSelected(){
+		Point t = new Point(selectX,selectY);
+		return t;
+	}
+	
+	public int MiniMax(int d, boolean Computer){
 	
 		int i,j,k,l;
-		int thiscamp = Computer ? 0 : 1;
+		int thiscamp = Computer ? 1 : 0;
 		int score = 0;
-		int bestChoiceforC = -999999;
-		int bestChoiceforP = 999999;
+		int bestChoiceforC = -9999999;
+		int bestChoiceforP = 9999999;
 
 		boolean[][] mr;
 		if(d < depth){
@@ -80,14 +86,21 @@ public class AI {
 									if(tc!=null){
 										cloneBoard[k][l] = tc;
 									}
+									else{
+										cloneBoard[k][l] = null;
+									}
 									cloneBoard[i][j] = fc;
 									
 									if(Computer){
 										if(score>bestChoiceforC){
 											bestChoiceforC = score;
+											selectX = i;
+											selectY = j;
 											bestX = k;
 											bestY = l;
+											//System.out.println("GG");
 										}
+
 									}
 									else{
 										if(score<bestChoiceforP){

@@ -51,8 +51,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private JTextPane textPane;
 	private String debugMessage;
 	private Chess[][] chessBoard;
-	private JLabel testP;
-	
+
+	private AI ai;
+	private boolean notDual;
 	private JPanel panel_2,panel_3;
 	//my code
 	private int state;
@@ -159,12 +160,15 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_3.setVisible(false);
 		
 		JMenu menu = new JMenu("Menu");
-		JMenuItem newGame = new JMenuItem("Game Start");
+		JMenuItem newGame = new JMenuItem("Dual");
+		JMenuItem vsCom = new JMenuItem("vs Com");
 	//	JMenuItem undo = new JMenuItem("");
 	//	JMenuItem surrender = new JMenuItem("");
 		newGame.addActionListener(this);//test
+		vsCom.addActionListener(this);
 	//	item2.addActionListener(new MyButtonListener());
 		menu.add(newGame);
+		menu.add(vsCom);
 	//	menu.add(undo);
 	//	menu.add(surrender);
 	//	JMenu mode = new JMenu("");
@@ -179,6 +183,33 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		this.setVisible(true);
 
 		//my code
+		
+		buildChessboard();
+		
+		color = new JPanel[8][8];
+		Color ncolor;//
+		ncolor = new Color(150,150,0,130);
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){
+				color[i][j] = new JPanel();
+				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
+				color[i][j].setSize(70, 70);
+				color[i][j].setBackground(ncolor);//
+				chessBoardpic.add(color[i][j]); 
+				color[i][j].setVisible(false);
+			}
+		}
+		
+		chessBoardpic.repaint();
+		
+		state = 2;//first state=2
+		nowcamp = 0;//
+		stateX = -1;
+		stateY = -1;
+		//my code ><
+	}
+	
+	private void buildChessboard(){
 		
 		chessBoard = new Chess[8][8];
 		
@@ -269,29 +300,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoard[5][7].setImage();
 		chessBoard[5][7].icon.setBounds((chessBoard[5][7].x)*70+19,(chessBoard[5][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[5][7].icon);
-		
-		color = new JPanel[8][8];
-		Color ncolor;//
-		ncolor = new Color(150,150,0,130);
-		for(int i = 0; i < 8; i ++){
-			for(int j = 0; j < 8; j ++){
-				
-				color[i][j] = new JPanel();
-				color[i][j].setLocation(20 + i * 70, 39 + j * 70);//
-				color[i][j].setSize(70, 70);
-				color[i][j].setBackground(ncolor);//
-				chessBoardpic.add(color[i][j]); 
-				color[i][j].setVisible(false);
-			}
-		}
-		
-		chessBoardpic.repaint();
-		
-		state = 2;//first state=2
-		nowcamp = 0;//
-		stateX = -1;
-		stateY = -1;
-		//my code ><
 	}
 	
 	private Point determineGrid(int x,int y){ 
@@ -308,86 +316,93 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	public void mouseClicked(MouseEvent e) {
 		
 		Point p = determineGrid(e.getX(),e.getY());
-		//my code:)
-		
-		if(state == 0){
 
-			boolean[][] boardAvailable;
-			if(p.x <=7 && p.y <= 7 && chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].camp() == nowcamp){
-				
-				boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
-				System.out.println(chessBoard[p.x][p.y].name);//test
-				System.out.println("camp:"+nowcamp);//test
-				
-				chessBoard[p.x][p.y].setMusic();
-				color[p.x][p.y].setVisible(true);
-				
-				for(int i = 0; i < 8; i ++){
-					for(int j = 0; j < 8; j ++){
-						//System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
-						if(boardAvailable[i][j] == true){
-							color[i][j].setVisible(true);
+
+
+			if(state == 0){
+	
+				boolean[][] boardAvailable;
+				if(p.x <=7 && p.y <= 7 && chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].camp() == nowcamp){
+					
+					boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
+					
+					chessBoard[p.x][p.y].setMusic();
+					color[p.x][p.y].setVisible(true);
+					
+					showPath(boardAvailable);
+					chessBoardpic.repaint();
+					
+					stateX = p.x;
+					stateY = p.y;
+					state = 1;
+				}
+	
+			}else if(state == 1){
+				System.out.println(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y));//
+				if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
+					if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
+						state = 2;
+						GameOver G = new GameOver();
+						G.setVisible(true);
+					}
+					else{
+						state = 0;
+					}
+					
+					clearPath();
+					
+					if(chessBoard[p.x][p.y] != null){
+						chessBoard[p.x][p.y].icon.setIcon(null);//clear picture
+					}
+					chessBoard[stateX][stateY].icon.setIcon(null);//clear picture
+					
+					if(chessBoard[p.x][p.y] != null){
+						chessBoard[p.x][p.y].setMusicDead();
+					}
+					
+					chessBoard[stateX][stateY].moveXY(p.x,p.y);
+					chessBoard[p.x][p.y] = chessBoard[stateX][stateY];
+					chessBoard[stateX][stateY] = null;//
+					
+					chessBoard[p.x][p.y].setImage();//
+					chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
+					chessBoardpic.add(chessBoard[p.x][p.y].icon);
+					chessBoardpic.repaint();
+					
+					if(chessBoard[p.x][p.y].getFirstStep()){
+						chessBoard[p.x][p.y].setFirstStep(false);
+					}
+					
+					if(notDual){
+						AIstep();
+					}		
+					else{
+						if(nowcamp == 0){
+							nowcamp = 1;
+							panel_2.setVisible(false);
+							panel_3.setVisible(true);
+						}
+						else if(nowcamp == 1){
+							nowcamp = 0;
+							panel_2.setVisible(true);
+							panel_3.setVisible(false);
 						}
 					}
+					
+				}else if(chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp == chessBoard[stateX][stateY].camp){
+					clearPath();
+					stateX = p.x;
+					stateY = p.y;
+					chessBoard[stateX][stateY].setMusic();
+					boolean[][] rb = chessBoard[stateX][stateY].getReachableGrid(chessBoard);
+					showPath(rb);
 				}
-				chessBoardpic.repaint();
-				
-				stateX = p.x;
-				stateY = p.y;
-				state = 1;
-			}
-
-		}else if(state == 1){
-							System.out.println(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y));//
-			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
-				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
-					state = 2;
-					GameOver G = new GameOver();
-					G.setVisible(true);
-				}
-				else{
+				else if(stateX == p.x && stateY == p.y){
+					clearPath();
 					state = 0;
 				}
 				
-				for(int i = 0; i < 8; i ++){
-					for(int j = 0; j < 8; j ++){	
-						color[i][j].setVisible(false);//clear block
-					}
-				}
-				if(chessBoard[p.x][p.y] != null){
-					chessBoard[p.x][p.y].icon.setIcon(null);//clear picture
-				}
-				chessBoard[stateX][stateY].icon.setIcon(null);//clear picture
-				
-				chessBoard[stateX][stateY].moveXY(p.x,p.y);
-				chessBoard[p.x][p.y] = chessBoard[stateX][stateY];
-				chessBoard[stateX][stateY] = null;//
-				
-				chessBoard[p.x][p.y].setImage();//
-				chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
-				chessBoardpic.add(chessBoard[p.x][p.y].icon);
-				chessBoardpic.repaint();
-				
-				if(nowcamp == 0){
-					nowcamp = 1;
-					panel_2.setVisible(false);
-					panel_3.setVisible(true);
-				}
-				else if(nowcamp == 1){
-					nowcamp = 0;
-					panel_2.setVisible(true);
-					panel_3.setVisible(false);
-				}
-				
-			}else if(stateX == p.x && stateY == p.y){
-				for(int i = 0; i < 8; i ++){
-					for(int j = 0; j < 8; j ++){	
-						color[i][j].setVisible(false);//clear block
-					}
-				}
-				state = 0;				
 			}
-		}
 		//my code
 		System.out.println("state="+state);//test
 		//DEBUG
@@ -396,13 +411,70 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		//DEBUG
 		
 	}
+	
+	private void showPath(boolean[][] rg){
+		
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){
+				//System.out.println("x:"+i+" y:"+j+" value:"+boardAvailable[i][j]);//test
+				if(rg[i][j] == true){
+					color[i][j].setVisible(true);
+				}
+			}
+		}
+	}
+	
+	private void AIstep(){
+
+			ai.setChessBoard(chessBoard);
+			ai.MiniMax(0, true);
+			Point m = ai.getChoice();
+			Point s = ai.getSelected();
+					
+			clearPath();
+			
+			if(chessBoard[m.x][m.y] != null){
+				chessBoard[m.x][m.y].icon.setIcon(null);//clear picture
+				chessBoard[m.x][m.y].setMusicDead();
+			}
+			System.out.println("SX:"+s.x);
+			System.out.println("SY:"+s.y);
+			System.out.println("MX:"+m.x);
+			System.out.println("MY:"+m.y);
+			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
+			
+			chessBoard[s.x][s.y].moveXY(m.x,m.y);
+			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
+			chessBoard[s.x][s.y] = null;//
+			
+			chessBoard[m.x][m.y].setImage();//
+			chessBoard[m.x][m.y].icon.setBounds((m.x)*70+19,(m.y)*70+39,70,70);
+			chessBoardpic.add(chessBoard[m.x][m.y].icon);
+			chessBoardpic.repaint();
+			
+			if(chessBoard[m.x][m.y].getFirstStep()){
+				chessBoard[m.x][m.y].setFirstStep(false);
+			}
+			nowcamp = 0;
+			panel_2.setVisible(true);
+			panel_3.setVisible(false);
+	}
+	
+	private void clearPath(){
+		
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){	
+				color[i][j].setVisible(false);
+			}
+		}
+	}
 
 	public void mouseEntered(MouseEvent e) {
-
+		
 	}
 
 	public void mouseExited(MouseEvent e) {
-
+		
 	}
 
 	public void mousePressed(MouseEvent e) {
@@ -416,6 +488,12 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	//mycode
 	public void actionPerformed(ActionEvent e){
 		state = 0;
+		JMenuItem item = (JMenuItem) e.getSource();
+		if(item.getText()=="vs Com"){
+			ai = new AI(1);
+			notDual = true;
+		}
+		
     }
 	//mycode
 	private class GameOver extends JFrame implements ActionListener {

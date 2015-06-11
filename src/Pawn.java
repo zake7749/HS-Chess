@@ -13,7 +13,6 @@ import sun.audio.AudioStream;
 public class Pawn extends Chess implements Cloneable{
 
 	boolean isKing;
-	boolean firstStep;
 	
 	public Pawn(String chessName,int x,int y,int camp){
 		
@@ -34,6 +33,14 @@ public class Pawn extends Chess implements Cloneable{
 		return k;
 	}
 	
+	@Override
+	public int getWeight(){
+		if(isKing){
+			return 16;
+		}else{
+			return 8;
+		}
+	}
 	
 	@Override
 	public void setImage() {
@@ -167,7 +174,10 @@ public class Pawn extends Chess implements Cloneable{
 						reachable[x][y+1] = true;
 				}
 				if(firstStep==true){
-					reachable[x][y+2] = true;
+					if(chessboard[x][y+2]==null)
+						reachable[x][y+2] = true;
+					else if(chessboard[x][y+2].camp!=this.camp)
+						reachable[x][y+2] = true;
 				}
 			}
 		}

@@ -42,7 +42,11 @@ public abstract class Chess implements Cloneable{
 	}
 	
 	public int getWeight(){
-		return this.weight;
+		if(camp==0)
+			return this.weight;
+		else{
+			return (int) (this.weight*1.2);
+		}
 	}
 	
 	public int camp(){
@@ -53,8 +57,16 @@ public abstract class Chess implements Cloneable{
 		return this.name;
 	}
 	
+	public boolean getFirstStep(){
+		return this.firstStep;
+	}
+	
 	public boolean isCritical(){
 		return this.critical;
+	}
+	
+	public void setFirstStep(boolean b) {
+		firstStep = b;
 	}
 	
 	public Chess clone(){
@@ -76,4 +88,5 @@ public abstract class Chess implements Cloneable{
 	protected boolean firstStep;
 	protected int weight;
 	protected int camp;
+
 }

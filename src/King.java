@@ -19,7 +19,7 @@ public class King extends Chess implements Cloneable{
 		this.y = y;
 		this.camp = camp;
 		this.critical = true;
-		this.weight = 99999;
+		this.weight = 999999;
 		
 		setImage();
 	}

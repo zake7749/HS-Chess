@@ -123,12 +123,10 @@ public class Queen extends Chess implements Cloneable{
 				reachable[x][i] = true;
 			}
 			else if(chessboard[x][i].camp!=camp){
-				System.out.println("I SHOCK YOU!");
 				reachable[x][i] = true;
 				break;
 			}
 			else{
-				System.out.println("I SHOCK YOU!");
 				break;
 			}
 		}
