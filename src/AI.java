@@ -47,6 +47,7 @@ public class AI {
 		return t;
 	}
 	
+
 	public int MiniMax(int d, boolean Computer){
 	
 		int i,j,k,l;
@@ -57,8 +58,8 @@ public class AI {
 
 		boolean[][] mr;
 		if(d < depth){
-			for(i=0;i<8;i++){
-				for(j=0;j<8;j++){
+			for(i=7;i>=0;i--){
+				for(j=7;j>=0;j--){
 					if(cloneBoard[i][j]!=null&&cloneBoard[i][j].camp == thiscamp){
 						//There is a chess.
 						//generate all steps of focused chess.
@@ -94,10 +95,13 @@ public class AI {
 									if(Computer){
 										if(score>bestChoiceforC){
 											bestChoiceforC = score;
-											selectX = i;
-											selectY = j;
-											bestX = k;
-											bestY = l;
+											if(d==0){
+												System.out.println("GG");
+												selectX = i;
+												selectY = j;
+												bestX = k;
+												bestY = l;
+											}
 											//System.out.println("GG");
 										}
 
@@ -125,6 +129,8 @@ public class AI {
 		}
 	}
 	
+
+	
 	private int survey(Chess[][] cB) {
 		int i,j;
 		int score = 0;
@@ -143,11 +149,4 @@ public class AI {
 		return score;
 	}
 
-	public void changeImage(JLabel lbl){
-		
-	}
-	
-	public void say(JTextPane txt){
-		
-	}
 }

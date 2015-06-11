@@ -177,17 +177,7 @@ public class Rock extends Chess implements Cloneable{
 		int i, j;
 		
 		reachable = getReachableGrid(chessboard);
-		
-		for(i=0; i<8; i++)
-		{
-			for(j=0; j<8; j++)
-			{
-				if (reachable[i][j] == true && Ix == i && Iy == j)
-					reach = true;
-			}
-		}
-		
-		return reach;
+		return reachable[Ix][Iy];
 	}
 
 }

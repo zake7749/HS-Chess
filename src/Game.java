@@ -388,6 +388,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 							panel_3.setVisible(false);
 						}
 					}
+					chessBoardpic.repaint();
 					
 				}else if(chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp == chessBoard[stateX][stateY].camp){
 					clearPath();
@@ -425,7 +426,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	}
 	
 	private void AIstep(){
-
+			
+			chessBoardpic.repaint();
 			ai.setChessBoard(chessBoard);
 			ai.MiniMax(0, true);
 			Point m = ai.getChoice();
@@ -442,7 +444,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			System.out.println("MX:"+m.x);
 			System.out.println("MY:"+m.y);
 			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
-			
+			chessBoard[s.x][s.y].setFirstStep(false);
 			chessBoard[s.x][s.y].moveXY(m.x,m.y);
 			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
 			chessBoard[s.x][s.y] = null;//
@@ -452,9 +454,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			chessBoardpic.add(chessBoard[m.x][m.y].icon);
 			chessBoardpic.repaint();
 			
-			if(chessBoard[m.x][m.y].getFirstStep()){
-				chessBoard[m.x][m.y].setFirstStep(false);
-			}
 			nowcamp = 0;
 			panel_2.setVisible(true);
 			panel_3.setVisible(false);

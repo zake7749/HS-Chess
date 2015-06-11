@@ -42,10 +42,10 @@ public abstract class Chess implements Cloneable{
 	}
 	
 	public int getWeight(){
-		if(camp==0)
-			return this.weight;
+		if(camp==1)
+			return weight;
 		else{
-			return (int) (this.weight*1.2);
+			return weight+2;
 		}
 	}
 	
