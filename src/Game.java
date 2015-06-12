@@ -55,13 +55,16 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private AI ai;
 	private boolean notDual;
 	private JPanel panel_2,panel_3,panel_4;
-	//my code
+	
 	private int state;
 	private int nowcamp;
 	private int stateX, stateY;
 	JTextArea history;
 	JPanel[][] color;
-	//my code
+	
+	private JButton Dual = new JButton("Dual");
+	private JButton vsCom = new JButton("vs Com");
+	private JButton unDo = new JButton("UNDO");
 	
 	public static void main(String[] args) {
 		try {
@@ -99,7 +102,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 
 	public Game() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 10, 875, 700);
+		setBounds(100, 10, 875, 675);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.addMouseListener(this);
@@ -112,7 +115,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		contentPane.add(DebugText);
 
 		chessBoardpic = new JLabel("");
-		chessBoardpic.setBounds(5, 5, 605, 637);
+		chessBoardpic.setBounds(5, 0, 605, 637);
 		chessBoardpic.setIcon(new ImageIcon("ChessBoard.png"));
 		contentPane.add(chessBoardpic);		
 		
@@ -122,15 +125,15 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		MilesEdgeworth = new JLabel("");
-		MilesEdgeworth.setBounds(10, 10, 209, 245);
-		panel.add(MilesEdgeworth);
-		
-		textPane = new JTextPane();
-		textPane.setForeground(new Color(0, 128, 0));
-		textPane.setBackground(Color.DARK_GRAY);
-		textPane.setBounds(10, 265, 209, 85);
-		panel.add(textPane);
+		Dual.addActionListener(this);
+		Dual.setBounds(10, 30, 209, 90);
+		vsCom.addActionListener(this);
+		vsCom.setBounds(10, 130, 209, 90);
+		unDo.addActionListener(this);
+		unDo.setBounds(10, 230, 209, 90);
+		panel.add(Dual);
+		panel.add(vsCom);
+		panel.add(unDo);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -171,23 +174,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_4.add(history);
 		panel_1.add(panel_4);//
 		
-		JMenu menu = new JMenu("Menu");
-		JMenuItem newGame = new JMenuItem("Dual");
-		JMenuItem vsCom = new JMenuItem("vs Com");
-		JMenuItem undo = new JMenuItem("UNDO");
-		newGame.addActionListener(this);//test
-		vsCom.addActionListener(this);
-		undo.addActionListener(this);
-		menu.add(newGame);
-		menu.add(vsCom);
-		menu.add(undo);
-		JMenuBar bar = new JMenuBar();
-		bar.add(menu);
-		this.setJMenuBar(bar);
-		this.setVisible(true);
-
-		//my code
-		
 		buildChessboard();
 		
 		color = new JPanel[8][8];
@@ -207,10 +193,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoardpic.repaint();
 		
 		state = 2;//first state=2
-		nowcamp = 0;//
+		nowcamp = 0;
 		stateX = -1;
 		stateY = -1;
-		//my code ><
 	}
 	
 	private void buildChessboard(){
@@ -308,11 +293,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoard[5][7].icon.setBounds((chessBoard[5][7].x)*70+19,(chessBoard[5][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[5][7].icon);
 		
-		for(int i = 0; i < 8; i++){
-			for(int j = 0; j < 8; j++){
-				oChessBoard[i][j] = chessBoard[i][j];
-			}
-		}
+		setLastChessBoard(0);
+		setLastChessBoard(1);
 	}
 	
 	private Point determineGrid(int x,int y){ 
@@ -419,7 +401,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				}
 				
 			}
-		//my code
+
 		System.out.println("state="+state);//test
 		//DEBUG
 		debugMessage = new String("Clicked. X is: " + e.getX() + " Y is: " + e.getY() + ". Grid is :[" + p.x + "," + p.y +"]");
@@ -534,15 +516,14 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 	}
 	
-	//mycode
 	public void actionPerformed(ActionEvent e){
 		state = 0;
-		JMenuItem item = (JMenuItem) e.getSource();
-		if(item.getText()=="vs Com"){
+		Object item = e.getSource();
+		if(item == vsCom){
 			ai = new AI(1);
 			notDual = true;
 		}
-		if(item.getText()=="UNDO" && state == 0){
+		if(item == unDo && state == 0){
 			if(nowcamp == 0){
 				for(int i = 0; i < 8; i++){
 					for(int j = 0; j < 8; j++){
@@ -563,7 +544,10 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
 								chessBoardpic.add(chessBoard[i][j].icon);
 								chessBoardpic.repaint();
-								if(wChessBoard[i][j].getFirstStep()){
+								if(wChessBoard[i][j].getName() == "wPawn" && j == 6){
+									chessBoard[i][j].setFirstStep(true);
+								}
+								if(wChessBoard[i][j].getName() == "bPawn" && j == 1){
 									chessBoard[i][j].setFirstStep(true);
 								}
 							}
@@ -591,13 +575,16 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
 								chessBoardpic.add(chessBoard[i][j].icon);
 								chessBoardpic.repaint();
-								if(bChessBoard[i][j].getFirstStep()){
+								if(bChessBoard[i][j].getName() == "bPawn" && j == 1){
+									chessBoard[i][j].setFirstStep(true);
+								}
+								if(bChessBoard[i][j].getName() == "wPawn" && j == 6){
 									chessBoard[i][j].setFirstStep(true);
 								}
 							}
 						}
 					}
-				}		
+				}
 			}
 		}
     }
@@ -626,7 +613,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		return '5';
 	}
 
-	//mycode
 	private class GameOver extends JFrame implements ActionListener {
 		public GameOver() {
 			setSize(200, 100);
