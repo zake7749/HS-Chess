@@ -122,6 +122,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
 		panel.setBounds(620, 21, 229, 360);
+		panel.setBackground(Color.GRAY);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -139,38 +140,39 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(620, 390, 230, 230);
 		panel_1.setLayout(null);
+		panel_1.setBackground(Color.GRAY);
 		contentPane.add(panel_1);
 		
 		panel_2 = new JPanel();		
 		JTextArea campName = new JTextArea();
-		campName.setBackground(Color.BLACK);
+		campName.setBackground(Color.GRAY);
+		panel_2.setBackground(Color.GRAY);
 		Font font = new Font("Verdana", Font.BOLD, 20);
 		campName.setFont(font);
-		campName.setForeground(Color.white);
 		campName.setText("Humans Alliance");
-		panel_2.setBounds(10, 95, 210, 40);
+		panel_2.setBounds(10, 30, 210, 40);
 		panel_2.add(campName);
 		panel_1.add(panel_2);//
 		
 		panel_3 = new JPanel();//
 		JTextArea campName2 = new JTextArea();
 		campName2.setBackground(Color.BLACK);
+		panel_3.setBackground(Color.GRAY);
 		campName2.setFont(font);
-		campName2.setForeground(Color.white);
 		campName2.setText("Dark Dragon");
-		panel_3.setBounds(10, 95, 210, 40);
+		panel_3.setBounds(10, 30, 210, 40);
 		panel_3.add(campName2);
 		panel_1.add(panel_3);//
 		panel_3.setVisible(false);
 		
 		panel_4 = new JPanel();//
 		history = new JTextArea();
-		history.setBackground(Color.BLACK);
+		history.setBackground(Color.GRAY);
+		panel_4.setBackground(Color.GRAY);
 		history.setFont(font);
-		history.setForeground(Color.white);
 		history.setText("Record");
 		history.setEditable(false);
-		panel_4.setBounds(10, 30, 210, 90);
+		panel_4.setBounds(10, 95, 210, 90);
 		panel_4.add(history);
 		panel_1.add(panel_4);//
 		
