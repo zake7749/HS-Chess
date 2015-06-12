@@ -93,10 +93,10 @@ public class AI {
 									cloneBoard[i][j] = fc;
 									
 									if(Computer){
-										if(score>bestChoiceforC){
+										if(score>=bestChoiceforC){
 											bestChoiceforC = score;
 											if(d==0){
-												System.out.println("GG");
+												//System.out.println("GG");
 												selectX = i;
 												selectY = j;
 												bestX = k;
