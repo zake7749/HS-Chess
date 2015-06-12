@@ -546,6 +546,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
 								chessBoardpic.add(chessBoard[i][j].icon);
 								chessBoardpic.repaint();
+								clearPath();//
 								if(wChessBoard[i][j].getName() == "wPawn" && j == 6){
 									chessBoard[i][j].setFirstStep(true);
 								}
@@ -577,6 +578,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 								chessBoard[i][j].icon.setBounds((i)*70+19,(j)*70+39,70,70);
 								chessBoardpic.add(chessBoard[i][j].icon);
 								chessBoardpic.repaint();
+								clearPath();//
 								if(bChessBoard[i][j].getName() == "bPawn" && j == 1){
 									chessBoard[i][j].setFirstStep(true);
 								}
