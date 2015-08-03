@@ -31,6 +31,7 @@ public abstract class Chess implements Cloneable{
 	public void moveXY(int x,int y){
 		this.x = x;
 		this.y = y;
+		this.firstStep = false;
 	}
 	
 	public int getX(){
