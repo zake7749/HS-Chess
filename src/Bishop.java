@@ -28,11 +28,11 @@ public class Bishop extends Chess {
 	public void setImage()
 	{
 		if(camp==0){
-			chessPic = new ImageIcon("hero_final.jpg");
+			chessPic = new ImageIcon("asset/img/hero_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("nafarian_final.jpg");
+			chessPic = new ImageIcon("asset/img/nafarian_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		

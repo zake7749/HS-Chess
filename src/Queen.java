@@ -32,11 +32,11 @@ public class Queen extends Chess implements Cloneable{
 	public void setImage()
 	{
 		if(camp==0){
-			chessPic = new ImageIcon("sv_final.jpg");
+			chessPic = new ImageIcon("asset/img/sv_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("daughter_final.jpg");
+			chessPic = new ImageIcon("asset/img/daughter_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}

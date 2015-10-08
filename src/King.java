@@ -34,11 +34,11 @@ public class King extends Chess implements Cloneable{
 	public void setImage() {
 		// TODO Auto-generated method stub
 		if(camp==0){
-			chessPic = new ImageIcon("kyan_final.jpg");
+			chessPic = new ImageIcon("asset/img/kyan_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("deadwing_final.jpg");
+			chessPic = new ImageIcon("asset/img/deadwing_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		

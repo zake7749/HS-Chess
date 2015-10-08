@@ -12,7 +12,6 @@ import sun.audio.AudioStream;
 
 public class Rock extends Chess implements Cloneable{
 	
-	
 	public Rock(String chessName,int x,int y,int camp){
 		
 		this.name = chessName;
@@ -34,11 +33,11 @@ public class Rock extends Chess implements Cloneable{
 	public void setImage() {
 		// TODO Auto-generated method stub
 		if(camp==0){
-			chessPic = new ImageIcon("druid_final.jpg");
+			chessPic = new ImageIcon("asset/img/druid_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("volcanicdrag_final.jpg");
+			chessPic = new ImageIcon("asset/img/volcanicdrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}

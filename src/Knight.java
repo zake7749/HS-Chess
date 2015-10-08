@@ -36,11 +36,11 @@ public class Knight extends Chess implements Cloneable{
 	public void setImage() {
 		// TODO Auto-generated method stub
 		if(camp==0){
-			chessPic = new ImageIcon("faith_final.jpg");
+			chessPic = new ImageIcon("asset/img/faith_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("hungrydrag_final.jpg");
+			chessPic = new ImageIcon("asset/img/hungrydrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}

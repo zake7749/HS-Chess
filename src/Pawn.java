@@ -46,11 +46,11 @@ public class Pawn extends Chess implements Cloneable{
 	public void setImage() {
 		// TODO Auto-generated method stub
 		if(camp==0){
-			chessPic = new ImageIcon("soldier_final.jpg");
+			chessPic = new ImageIcon("asset/img/soldier_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("littledrag_final.jpg");
+			chessPic = new ImageIcon("asset/img/littledrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}
