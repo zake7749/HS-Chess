@@ -56,7 +56,7 @@ public class AI {
 		int bestChoiceforC = -9999999;
 		int bestChoiceforP = 9999999;
 
-		boolean[][] mr;
+		boolean[][] mr;//store all available steps for the selected chess.
 		if(d < depth){
 			for(i=7;i>=0;i--){
 				for(j=7;j>=0;j--){
@@ -67,30 +67,40 @@ public class AI {
 						for(k=0;k<8;k++){
 							for(l=0;l<8;l++){
 								if(mr[k][l]){
+									//(i,j) -> (k,l)
 									Chess tc = null;
 									if(cloneBoard[k][l]!=null){
-										//Store the chess is goind to remove.
+										//Store the chess is going to remove.
 											tc = cloneBoard[k][l];
 									}
-									//Store the chess I focused, i.e chess[i][j].
-									Chess fc = cloneBoard[i][j];
-									//Move focused chess from i,j to k,l;
-									cloneBoard[k][l] = cloneBoard[i][j];
-									cloneBoard[i][j] = null;
-									if(Computer){
-										score = MiniMax(d+1,false);
+									if(tc!=null&&tc.weight>999998){
+									//target is king.
+										if(Computer){
+											score = 9999999;
+										}else{
+											score = -9999999;
+										}
+									}else{
+										//Store the chess I focused, i.e chess[i][j].
+										Chess fc = cloneBoard[i][j];
+										//Move focused chess from i,j to k,l;
+										cloneBoard[k][l] = cloneBoard[i][j];
+										cloneBoard[i][j] = null;
+										if(Computer){
+											score = MiniMax(d+1,false);
+										}
+										else{
+											score = MiniMax(d+1,true);
+										}
+										
+										if(tc!=null){
+											cloneBoard[k][l] = tc;
+										}
+										else{
+											cloneBoard[k][l] = null;
+										}
+										cloneBoard[i][j] = fc;
 									}
-									else{
-										score = MiniMax(d+1,true);
-									}
-									
-									if(tc!=null){
-										cloneBoard[k][l] = tc;
-									}
-									else{
-										cloneBoard[k][l] = null;
-									}
-									cloneBoard[i][j] = fc;
 									
 									if(Computer){
 										if(score>=bestChoiceforC){
