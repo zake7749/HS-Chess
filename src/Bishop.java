@@ -43,7 +43,7 @@ public class Bishop extends Chess {
 			String song = "hero.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -58,7 +58,7 @@ public class Bishop extends Chess {
 			String song = "nafarian.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -77,7 +77,7 @@ public class Bishop extends Chess {
 			String song = "hero_dead.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -92,7 +92,7 @@ public class Bishop extends Chess {
 			String song = "nafarian_dead_final.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {

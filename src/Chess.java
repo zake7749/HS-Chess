@@ -5,7 +5,7 @@ import sun.audio.*;
 public abstract class Chess implements Cloneable{
 	
 	public Chess(){
-		
+		this.rootPath = "asset/music/";
 	}
 	
 	public Chess(String chessName,int x,int y,int camp){
@@ -16,6 +16,8 @@ public abstract class Chess implements Cloneable{
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 0;
+
+		this.rootPath = "asset/music/";
 		
 		setImage();
 	}
@@ -89,5 +91,5 @@ public abstract class Chess implements Cloneable{
 	protected boolean firstStep;
 	protected int weight;
 	protected int camp;
-
+	protected final String rootPath;
 }

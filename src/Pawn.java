@@ -60,7 +60,7 @@ public class Pawn extends Chess implements Cloneable{
 			String song = "soldier.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -75,7 +75,7 @@ public class Pawn extends Chess implements Cloneable{
 			String song = "littledrag.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -94,7 +94,7 @@ public class Pawn extends Chess implements Cloneable{
 			String song = "soldier_dead.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -109,7 +109,7 @@ public class Pawn extends Chess implements Cloneable{
 			String song = "littledrag_dead_final.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {

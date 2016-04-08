@@ -46,7 +46,7 @@ public class Queen extends Chess implements Cloneable{
 			String song = "sv.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -61,7 +61,7 @@ public class Queen extends Chess implements Cloneable{
 			String song = "daughter.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -80,7 +80,7 @@ public class Queen extends Chess implements Cloneable{
 			String song = "sv_dead.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -95,7 +95,7 @@ public class Queen extends Chess implements Cloneable{
 			String song = "daughter_dead.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(song);
+				in = new FileInputStream(rootPath+song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {

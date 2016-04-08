@@ -29,8 +29,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 
 	private JPanel contentPane;
 	private JLabel chessBoardpic; 
-	private JLabel DebugText;
-	private String debugMessage;
 	private Chess[][] chessBoard,bChessBoard,wChessBoard,oChessBoard;
 	
 	private ColorPanel colorpanel;
@@ -89,12 +87,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		contentPane.addMouseListener(this);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		/*
-		DebugText = new JLabel("Debug Test :");
-		DebugText.setBounds(5, 642, 824, 15);
-		DebugText.setVerticalAlignment(SwingConstants.BOTTOM);
-		contentPane.add(DebugText);
-		*/
+
 		chessBoardpic = new JLabel("");
 		chessBoardpic.setBounds(5, 0, 605, 637);
 		chessBoardpic.setIcon(new ImageIcon("ChessBoard.png"));
@@ -212,20 +205,20 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			chessBoardpic.add(chessBoard[i][6].icon);
 		}
 		
-		chessBoard[0][0] = new Rock("bRock",0,0,1);//test
+		chessBoard[0][0] = new Rook("bRock",0,0,1);//test
 		chessBoard[0][0].setImage();
 		chessBoard[0][0].icon.setBounds((chessBoard[0][0].x)*70+19,(chessBoard[0][0].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[0][0].icon);
-		chessBoard[7][0] = new Rock("bRock",7,0,1);//test
+		chessBoard[7][0] = new Rook("bRock",7,0,1);//test
 		chessBoard[7][0].setImage();
 		chessBoard[7][0].icon.setBounds((chessBoard[7][0].x)*70+19,(chessBoard[7][0].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[7][0].icon);
 		
-		chessBoard[0][7] = new Rock("wRock",0,7,0);//test
+		chessBoard[0][7] = new Rook("wRock",0,7,0);//test
 		chessBoard[0][7].setImage();
 		chessBoard[0][7].icon.setBounds((chessBoard[0][7].x)*70+19,(chessBoard[0][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[0][7].icon);
-		chessBoard[7][7] = new Rock("wRock",7,7,0);//test
+		chessBoard[7][7] = new Rook("wRock",7,7,0);//test
 		chessBoard[7][7].setImage();
 		chessBoard[7][7].icon.setBounds((chessBoard[7][7].x)*70+19,(chessBoard[7][7].y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[7][7].icon);
@@ -270,6 +263,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		setLastChessBoard(1);
 	}
 	
+	/* transform the position mouse clicked 
+	 * to a corresponding grid on the chess board image */
 	private Point determineGrid(int x,int y){ 
 		int chessBoardX=24,chessBoardY=41;
 		int gridWidth=70,gridHeight=70;
@@ -281,6 +276,8 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		return xy;
 	}
 	
+	/* check if this click is on the board
+	 * and is clicking on our camp. */
 	private boolean isValidClick(Point p){
 		return (p.x <=7 && p.y <= 7 && chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].camp() == nowcamp);
 	}
@@ -289,7 +286,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		return (chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp!=nowcamp);
 	}
 	
-	private void moveAChess(Point p){
+	
+	/* Operation of the chess */
+	private void moveAChessTo(Point p){
 		
 		/*
 		 * (stateX,stateY) -> (p.x,p.y)
@@ -306,10 +305,36 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoardpic.repaint();
 		
 	}
+	
 	private void removeAChess(Point p){
 
 		chessBoard[p.x][p.y].icon.setIcon(null);
 		chessBoard[p.x][p.y].setMusicDead();
+	}
+
+	private void clickAChess(Point p){
+		
+		chessBoard[p.x][p.y].setMusic();
+		boolean[][] boardAvailable;	
+		boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
+		colorpanel.showPath(boardAvailable);
+		chessBoardpic.repaint();
+		
+		//stateX,stateY = x,y value of the selected chess.
+		stateX = p.x;
+		stateY = p.y;
+	}
+	
+	/* Operation on the state of game */
+	private boolean isGameOver(Point p){
+		
+		if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
+			state = 2;
+			GameOver G = new GameOver();
+			G.setVisible(true);
+			return true;
+		}
+		return false;
 	}
 	
 	public void mouseClicked(MouseEvent e) {
@@ -318,50 +343,33 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		//state 0 : Select a chess and focus on it.
 		//state 1 : Move the focused chess.
+		//state 2 : Game over. pause the ui.
 		
-		//stateX,stateY = x,y value of the selected chess.
-		
-		if(state == 0){
-		
-			if(isValidClick(p)){
-				boolean[][] boardAvailable;	
-				boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
-				chessBoard[p.x][p.y].setMusic();
-				colorpanel.showPath(boardAvailable);
-				chessBoardpic.repaint();
-					
-				stateX = p.x;
-				stateY = p.y;
-				state = 1;
-			}
+		if(state == 0 && isValidClick(p)){
+			clickAChess(p);
+			state = 1;		
 	
 		}else if(state == 1){
+			
+			colorpanel.clearPath();
+			
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
+			
+			/*Can move to (px,py) from (sx,sy)*/
 				
-				if(chessBoard[p.x][p.y] != null && chessBoard[p.x][p.y].isCritical()){
-					state = 2;
-					GameOver G = new GameOver();
-					G.setVisible(true);
-				}
-				else{
+				if(!isGameOver(p)){
 					state = 0;
 				}
 				
 				if(isAnEnemy(p)){
 					removeAChess(p);
 				}
-				moveAChess(p);
+				moveAChessTo(p);
 				setLastChessBoard(nowcamp);
 					
-				colorpanel.clearPath();
-
-				
-					
-
 				int temp1 = 8 - stateY;
 				int temp2 = 8 - p.y;
 				history.setText(""+intToChar(stateX)+temp1+" ---> "+intToChar(p.x)+temp2);
-				
 				
 				if(notDual){
 					AIstep();
@@ -372,7 +380,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 						panel_2.setVisible(false);
 						panel_3.setVisible(true);
 					}
-					else if(nowcamp == 1){
+					else{
 						nowcamp = 0;
 						panel_2.setVisible(true);
 						panel_3.setVisible(false);
@@ -381,15 +389,10 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 					
 			}else if(chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp == chessBoard[stateX][stateY].camp){
 				//select another chess.
-				colorpanel.clearPath();
-				stateX = p.x;
-				stateY = p.y;
-				chessBoard[stateX][stateY].setMusic();
-				boolean[][] rb = chessBoard[stateX][stateY].getReachableGrid(chessBoard);
-				colorpanel.showPath(rb);
+				clickAChess(p);
 			}
 			else if(stateX == p.x && stateY == p.y){
-				colorpanel.clearPath();
+				//click the same chess again.
 				state = 0;
 			}
 				
@@ -414,10 +417,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				if(chessBoard[m.x][m.y].isCritical())
 					GG = true;
 			}
-			System.out.println("SX:"+s.x);
-			System.out.println("SY:"+s.y);
-			System.out.println("MX:"+m.x);
-			System.out.println("MY:"+m.y);
+
 			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
 			chessBoard[s.x][s.y].setFirstStep(false);
 			
@@ -427,9 +427,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			
 			chessBoard[s.x][s.y].moveXY(m.x,m.y);
 			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
-			chessBoard[s.x][s.y] = null;//
+			chessBoard[s.x][s.y] = null;
 			
-			chessBoard[m.x][m.y].setImage();//
+			chessBoard[m.x][m.y].setImage();
 			chessBoard[m.x][m.y].icon.setBounds((m.x)*70+19,(m.y)*70+39,70,70);
 			chessBoardpic.add(chessBoard[m.x][m.y].icon);
 			chessBoardpic.repaint();
@@ -450,20 +450,20 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	
 	
 	private void setLastChessBoard(int ncamp){
-				if(nowcamp == 0){
-					for(int i = 0; i < 8; i++){
-						for(int j = 0; j < 8; j++){
-							wChessBoard[i][j] = chessBoard[i][j];
-						}
-					}
+		if(nowcamp == 0){
+			for(int i = 0; i < 8; i++){
+				for(int j = 0; j < 8; j++){
+					wChessBoard[i][j] = chessBoard[i][j];
 				}
-				else if(nowcamp == 1){
-					for(int i = 0; i < 8; i++){
-						for(int j = 0; j < 8; j++){
-							bChessBoard[i][j] = chessBoard[i][j];
-						}
-					}
+			}
+		}
+		else if(nowcamp == 1){
+			for(int i = 0; i < 8; i++){
+				for(int j = 0; j < 8; j++){
+					bChessBoard[i][j] = chessBoard[i][j];
 				}
+			}
+		}
 	}	
 
 	public void mouseEntered(MouseEvent e) {

@@ -61,44 +61,34 @@ public class AI {
 			for(i=7;i>=0;i--){
 				for(j=7;j>=0;j--){
 					if(cloneBoard[i][j]!=null&&cloneBoard[i][j].camp == thiscamp){
-						//There is a chess.
-						//generate all steps of focused chess.
+						//generate all steps of the focused chess.
 						mr = cloneBoard[i][j].getReachableGrid(cloneBoard);
 						for(k=0;k<8;k++){
 							for(l=0;l<8;l++){
 								if(mr[k][l]){
 									//(i,j) -> (k,l)
+									
+									//Store the chess is going to remove.
 									Chess tc = null;
 									if(cloneBoard[k][l]!=null){
-										//Store the chess is going to remove.
-											tc = cloneBoard[k][l];
+										tc = cloneBoard[k][l];
 									}
+									
+									//if target is king. No need to cont.
 									if(tc!=null&&tc.weight>999998){
-									//target is king.
-										if(Computer){
-											score = 9999999;
-										}else{
-											score = -9999999;
-										}
+										score = Computer ? 9999999 : -9999999;
 									}else{
-										//Store the chess I focused, i.e chess[i][j].
+
 										Chess fc = cloneBoard[i][j];
 										//Move focused chess from i,j to k,l;
 										cloneBoard[k][l] = cloneBoard[i][j];
 										cloneBoard[i][j] = null;
-										if(Computer){
-											score = MiniMax(d+1,false);
-										}
-										else{
-											score = MiniMax(d+1,true);
-										}
 										
-										if(tc!=null){
-											cloneBoard[k][l] = tc;
-										}
-										else{
-											cloneBoard[k][l] = null;
-										}
+										/* dfs */
+										score = Computer ? MiniMax(d+1,false) : MiniMax(d+1,true);
+
+										/* back-tracking */
+										cloneBoard[k][l] = (tc!=null) ? tc : null;
 										cloneBoard[i][j] = fc;
 									}
 									
