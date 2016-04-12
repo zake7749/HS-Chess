@@ -23,8 +23,11 @@ import java.awt.event.ActionListener;//
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.Stack;
 
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 import javax.swing.JButton;//
 
 public class Game extends JFrame implements MouseListener , ActionListener{//test
@@ -312,14 +315,23 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 
 		chessBoard[p.x][p.y].icon.setIcon(null);
 		chessBoard[p.x][p.y].setMusicDead();
+<<<<<<< HEAD
 		chessBoard[p.x][p.y].removed();
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 
 	private void clickAChess(Point p){
 		
 		chessBoard[p.x][p.y].setMusic();
+<<<<<<< HEAD
 		Stack<Point> moves = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
 		colorpanel.showPath(moves);
+=======
+		boolean[][] boardAvailable;	
+		boardAvailable = chessBoard[p.x][p.y].getReachableGrid(chessBoard);
+		colorpanel.showPath(boardAvailable);
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		chessBoardpic.repaint();
 		
 		//stateX,stateY = x,y value of the selected chess.
@@ -349,7 +361,10 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		if(state == 0 && isValidClick(p)){
 			clickAChess(p);
+<<<<<<< HEAD
 			System.out.println("CLICKED:("+chessBoard[p.x][p.y].getX()+","+chessBoard[p.x][p.y].getY()+")");
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 			state = 1;		
 	
 		}else if(state == 1){
@@ -408,14 +423,23 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			chessBoardpic.repaint();
 			
 			ai.setChessBoard(chessBoard);
+<<<<<<< HEAD
 			ai.alphaBetaMax(-9999999,9999999, 0);
+=======
+			ai.MiniMax(0, true);
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 			Point m = ai.getChoice();
 			Point s = ai.getSelected();
 					
 			colorpanel.clearPath();
 			
 			if(chessBoard[m.x][m.y] != null){
+<<<<<<< HEAD
 				removeAChess(new Point(m.x,m.y));
+=======
+				chessBoard[m.x][m.y].icon.setIcon(null);//clear picture
+				chessBoard[m.x][m.y].setMusicDead();
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 				if(chessBoard[m.x][m.y].isCritical())
 					GG = true;
 			}
@@ -450,7 +474,11 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			panel_3.setVisible(false);
 	}
 	
+<<<<<<< HEAD
 	/* ¥Î©ó®¬´Ñ */
+=======
+	
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	private void setLastChessBoard(int ncamp){
 		if(nowcamp == 0){
 			for(int i = 0; i < 8; i++){

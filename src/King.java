@@ -2,7 +2,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.util.Stack;
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,9 +23,14 @@ public class King extends Chess implements Cloneable{
 		this.y = y;
 		this.camp = camp;
 		this.critical = true;
+<<<<<<< HEAD
 		this.weight = 99999;
 		this.status = true;
 
+=======
+		this.weight = 999999;
+		
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		setImage();
 	}
 
@@ -117,17 +125,29 @@ public class King extends Chess implements Cloneable{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public Stack<Point> getReachableGrid(Chess[][] chessboard) {
 		
 		Stack<Point> moves = new Stack<Point>();
 		
 		int i = 0,j = 0;
+=======
+	public boolean[][] getReachableGrid(Chess[][] chessboard) {
+		
+		boolean reachable[][] = new boolean[8][8];
+		
+		int i = 0,j = 0;
+		for(i=0;i<8;i++)
+			for(j=0;j<8;j++)
+				reachable[i][j] = false;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		
 		for(i=x-1;i<=x+1;i++){
 			for(j=y-1;j<=y+1;j++){
 				if(i>=0&&j>=0&&i<8&&j<8)
 				{
 					if(chessboard[i][j]==null)
+<<<<<<< HEAD
 						moves.add(new Point(i,j));
 					else if(chessboard[i][j].camp!=camp)
 						moves.add(new Point(i,j));
@@ -137,6 +157,17 @@ public class King extends Chess implements Cloneable{
 		moves.remove(new Point(i,j));
 		
 		return moves;
+=======
+						reachable[i][j] = true;
+					else if(chessboard[i][j].camp!=camp)
+						reachable[i][j] = true;
+				}
+			}
+		}
+		reachable[x][y] = false;
+		
+		return reachable;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 
 	@Override

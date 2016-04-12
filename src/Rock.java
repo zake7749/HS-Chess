@@ -2,10 +2,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
-import java.util.Stack;
-=======
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -14,29 +10,22 @@ import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
 
-public class Knight extends Chess implements Cloneable{
-
-	int[] moveX = {-2,-1,1,2,-2,-1,1,2};
-	int[] moveY = {1,2,2,1,-1,-2,-2,-1};
+public class Rock extends Chess implements Cloneable{
 	
-	public Knight(String chessName, int x, int y, int camp) {
+	public Rock(String chessName,int x,int y,int camp){
 		
 		this.name = chessName;
 		this.x = x;
 		this.y = y;
 		this.camp = camp;
 		this.critical = false;
-		this.weight = 12;
-<<<<<<< HEAD
-		this.status = true;
-=======
+		this.weight = 20;
 		
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		setImage();
 	}
 	
-	public Knight clone(){
-		Knight k = new Knight(this.name,this.x,this.y,this.camp);
+	public Rock clone(){
+		Rock k = new Rock(this.name,this.x,this.y,this.camp);
 		return k;
 	}
 	
@@ -44,21 +33,21 @@ public class Knight extends Chess implements Cloneable{
 	public void setImage() {
 		// TODO Auto-generated method stub
 		if(camp==0){
-			chessPic = new ImageIcon("asset/img/faith_final.jpg");
+			chessPic = new ImageIcon("asset/img/druid_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 		else if(camp==1){
-			chessPic = new ImageIcon("asset/img/hungrydrag_final.jpg");
+			chessPic = new ImageIcon("asset/img/volcanicdrag_final.jpg");
 			icon = new JLabel(chessPic);
 		}
 	}
 	public void setMusic(){
 		AudioPlayer.player.stop(audioStream);
 		if(camp==0){
-			String song = "faith.wav";
+			String song = "druid.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(rootPath+song);
+				in = new FileInputStream(song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -70,10 +59,10 @@ public class Knight extends Chess implements Cloneable{
 			}
 		}
 		else if(camp==1){
-			String song = "hungrydrag.wav";
+			String song = "volcanodrag.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(rootPath+song);
+				in = new FileInputStream(song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -89,10 +78,10 @@ public class Knight extends Chess implements Cloneable{
 	public void setMusicDead(){
 		AudioPlayer.player.stop(audioStream);
 		if(camp==0){
-			String song = "faith_dead.wav";
+			String song = "druid_dead.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(rootPath+song);
+				in = new FileInputStream(song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -104,10 +93,10 @@ public class Knight extends Chess implements Cloneable{
 			}
 		}
 		else if(camp==1){
-			String song = "hungrydrag_dead_final.wav";
+			String song = "volcanodrag_dead_final.wav";
 			InputStream in;
 			try {
-				in = new FileInputStream(rootPath+song);
+				in = new FileInputStream(song);
 				audioStream = new AudioStream(in);
 				AudioPlayer.player.start(audioStream);
 			} catch (FileNotFoundException e) {
@@ -120,70 +109,74 @@ public class Knight extends Chess implements Cloneable{
 		}
 	    
 	}
-	@Override
-<<<<<<< HEAD
-	public Stack<Point> getReachableGrid(Chess[][] chessboard) {
-		
-		Stack<Point> moves = new Stack<Point>();
 
-		int i = 0,j = 0;
-	
-		for(i=0;i<8;i++){
-			if(x+moveX[i]>=0&&x+moveX[i]<8&&y+moveY[i]>=0&&y+moveY[i]<8){
-				if(chessboard[x+moveX[i]][y+moveY[i]]==null)
-					moves.push(new Point(x+moveX[i],y+moveY[i]));
-				else if(chessboard[x+moveX[i]][y+moveY[i]].camp!=camp){
-					moves.push(new Point(x+moveX[i],y+moveY[i]));
-				}
-			}
-		}
-		return moves;
-=======
+	@Override
 	public boolean[][] getReachableGrid(Chess[][] chessboard) {
 		
 		boolean reachable[][] = new boolean[8][8];
-
+	
 		int i = 0,j = 0;
 		for(i=0;i<8;i++)
 			for(j=0;j<8;j++)
-				reachable[i][j] = false;		
-		for(i=0;i<8;i++){
-			if(x+moveX[i]>=0&&x+moveX[i]<8&&y+moveY[i]>=0&&y+moveY[i]<8){
-				if(chessboard[x+moveX[i]][y+moveY[i]]==null)
-					reachable[x+moveX[i]][y+moveY[i]] = true;
-				else if(chessboard[x+moveX[i]][y+moveY[i]].camp!=camp){
-					reachable[x+moveX[i]][y+moveY[i]] = true;
-				}
+				reachable[i][j] = false;
+
+		for(i=y+1;i<8;i++){
+			if(chessboard[x][i]==null){
+				reachable[x][i] = true;
+			}
+			else if(chessboard[x][i].camp!=camp){
+				reachable[x][i] = true;
+				break;
+			}
+			else{
+				break;
 			}
 		}
+
+		for(i=y-1;i>=0;i--){
+			if(chessboard[x][i]==null)
+				reachable[x][i] = true;
+			else if(chessboard[x][i].camp!=camp){
+				reachable[x][i] = true;
+				break;
+			}
+			else break;
+		}
+
+		for(i=x+1;i<8;i++){
+			if(chessboard[i][y]==null)
+				reachable[i][y] = true;
+			else if(chessboard[i][y].camp!=camp){
+				reachable[i][y] = true;
+				break;
+			}
+			else break;
+		}
+
+		for(i=x-1;i>=0;i--){
+			if(chessboard[i][y]==null)
+				reachable[i][y] = true;
+			else if(chessboard[i][y].camp!=camp){
+				reachable[i][y] = true;
+				break;
+			}
+			else break;
+		}
+
+		reachable[x][y] = false;
+		
 		return reachable;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 
 	@Override
 	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
 	{
-<<<<<<< HEAD
-		Stack<Point> m = getReachableGrid(chessboard);
-        return m.contains(new Point(Ix,Iy));
-=======
 		boolean reach = false;
 		boolean[][] reachable;
 		int i, j;
 		
 		reachable = getReachableGrid(chessboard);
-		
-		for(i=0; i<8; i++)
-		{
-			for(j=0; j<8; j++)
-			{
-				if (reachable[i][j] == true && Ix == i && Iy == j)
-					reach = true;
-			}
-		}
-		
-		return reach;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
+		return reachable[Ix][Iy];
 	}
 
 }

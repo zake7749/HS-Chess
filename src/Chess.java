@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import java.util.Objects;
 import java.util.Stack;
 
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import sun.audio.*;
@@ -19,12 +22,17 @@ public abstract class Chess implements Cloneable{
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 0;
+<<<<<<< HEAD
 		this.status = false;
+=======
+
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		this.rootPath = "asset/music/";
 		
 		setImage();
 	}
 	
+<<<<<<< HEAD
 	public void flip(){
 		status = !status;
 	}
@@ -38,6 +46,8 @@ public abstract class Chess implements Cloneable{
 	}
 	
 	
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	public void moveX(int x){
 		this.x = x;
 	}
@@ -52,6 +62,7 @@ public abstract class Chess implements Cloneable{
 		this.firstStep = false;
 	}
 	
+<<<<<<< HEAD
 	public void moveXY(int x,int y,int flag){
 		if(flag == 1){
 			this.x = x;
@@ -63,6 +74,8 @@ public abstract class Chess implements Cloneable{
 		}
 	}
 	
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	public int getX(){
 		return this.x;
 	}
@@ -105,7 +118,11 @@ public abstract class Chess implements Cloneable{
 	public abstract void setImage();
 	public abstract void setMusic();
 	public abstract void setMusicDead();
+<<<<<<< HEAD
 	public abstract Stack<Point> getReachableGrid(Chess[][] chessboard);
+=======
+	public abstract boolean[][] getReachableGrid(Chess[][] chessboard);
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	public abstract boolean isReachable(Chess[][]chessboard,int x,int y);	
  
 	public AudioStream audioStream;
@@ -119,6 +136,7 @@ public abstract class Chess implements Cloneable{
 	protected int weight;
 	protected int camp;
 	protected final String rootPath;
+<<<<<<< HEAD
 	
     @Override
     public boolean equals(Object o) {
@@ -138,4 +156,6 @@ public abstract class Chess implements Cloneable{
 	
     public boolean status;
 	
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 }

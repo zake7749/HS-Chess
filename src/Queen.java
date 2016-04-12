@@ -2,7 +2,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+<<<<<<< HEAD
 import java.util.Stack;
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -21,8 +24,12 @@ public class Queen extends Chess implements Cloneable{
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 28;
+<<<<<<< HEAD
 		this.status = true;
 
+=======
+		
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		setImage();
 	}
 	
@@ -110,6 +117,7 @@ public class Queen extends Chess implements Cloneable{
 		}
 	    
 	}
+<<<<<<< HEAD
 	public Stack<Point> getReachableGrid(Chess[][] chessboard)
 	{
 		Stack<Point> moves = new Stack<Point>();
@@ -123,6 +131,24 @@ public class Queen extends Chess implements Cloneable{
 			}
 			else if(chessboard[x][i].camp!=camp){
 				moves.push(new Point(x,i));
+=======
+	public boolean[][] getReachableGrid(Chess[][] chessboard)
+	{
+		boolean reachable[][] = new boolean[8][8];
+		
+		int i = 0,j = 0;
+		for(i=0;i<8;i++)
+			for(j=0;j<8;j++)
+				reachable[i][j] = false;
+		
+		//Rook
+		for(i=y+1;i<8;i++){
+			if(chessboard[x][i]==null){
+				reachable[x][i] = true;
+			}
+			else if(chessboard[x][i].camp!=camp){
+				reachable[x][i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 				break;
 			}
 			else{
@@ -132,9 +158,15 @@ public class Queen extends Chess implements Cloneable{
 
 		for(i=y-1;i>=0;i--){
 			if(chessboard[x][i]==null)
+<<<<<<< HEAD
 				moves.push(new Point(x,i));
 			else if(chessboard[x][i].camp!=camp){
 				moves.push(new Point(x,i));
+=======
+				reachable[x][i] = true;
+			else if(chessboard[x][i].camp!=camp){
+				reachable[x][i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 				break;
 			}
 			else break;
@@ -142,9 +174,15 @@ public class Queen extends Chess implements Cloneable{
 
 		for(i=x+1;i<8;i++){
 			if(chessboard[i][y]==null)
+<<<<<<< HEAD
 				moves.push(new Point(i,y));
 			else if(chessboard[i][y].camp!=camp){
 				moves.push(new Point(i,y));
+=======
+				reachable[i][y] = true;
+			else if(chessboard[i][y].camp!=camp){
+				reachable[i][y] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 				break;
 			}
 			else break;
@@ -152,9 +190,15 @@ public class Queen extends Chess implements Cloneable{
 
 		for(i=x-1;i>=0;i--){
 			if(chessboard[i][y]==null)
+<<<<<<< HEAD
 				moves.push(new Point(i,y));
 			else if(chessboard[i][y].camp!=camp){
 				moves.push(new Point(i,y));
+=======
+				reachable[i][y] = true;
+			else if(chessboard[i][y].camp!=camp){
+				reachable[i][y] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 				break;
 			}
 			else break;
@@ -168,11 +212,19 @@ public class Queen extends Chess implements Cloneable{
 			{
 				if(chessboard[x-i][y-i] == null) // reachable
 				{
+<<<<<<< HEAD
 					moves.push(new Point(x-i,y-i));
 				}
 				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x-i,y-i));
+=======
+					reachable[x-i][y-i] = true;
+				}
+				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y-i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else	break; 
@@ -187,11 +239,19 @@ public class Queen extends Chess implements Cloneable{
 			{
 				if(chessboard[x-i][y+i] == null) //reachable
 				{
+<<<<<<< HEAD
 					moves.push(new Point(x-i,y+i));
 				}	
 				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x-i,y+i));
+=======
+					reachable[x-i][y+i] = true;
+				}	
+				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x-i][y+i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}	
 				else	break;
@@ -206,11 +266,19 @@ public class Queen extends Chess implements Cloneable{
 			{
 				if(chessboard[x+i][y-i] == null) // reachable
 				{
+<<<<<<< HEAD
 					moves.push(new Point(x+i,y-i));
 				}	
 				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
 				{	
 					moves.push(new Point(x+i,y-i));
+=======
+					reachable[x+i][y-i] = true;
+				}	
+				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
+				{	
+					reachable[x+i][y-i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else break;
@@ -225,11 +293,19 @@ public class Queen extends Chess implements Cloneable{
 			{
 				if(chessboard[x+i][y+i] == null) // reachable
 				{
+<<<<<<< HEAD
 					moves.push(new Point(x+i,y+i));
 				}
 				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x+i,y+i));
+=======
+					reachable[x+i][y+i] = true;
+				}
+				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
+				{
+					reachable[x+i][y+i] = true;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else	break;
@@ -239,14 +315,39 @@ public class Queen extends Chess implements Cloneable{
 		}
 		
 		
+<<<<<<< HEAD
 		moves.remove(new Point(x,y));
 		
 		return moves;
+=======
+		reachable[x][y] = false;
+		
+		return reachable;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 	
 	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
 	{
+<<<<<<< HEAD
 		Stack<Point> m = getReachableGrid(chessboard);
         return m.contains(new Point(Ix,Iy));
+=======
+		boolean reach = false;
+		boolean[][] reachable;
+		int i, j;
+		
+		reachable = getReachableGrid(chessboard);
+		
+		for(i=0; i<8; i++)
+		{
+			for(j=0; j<8; j++)
+			{
+				if (reachable[i][j] == true && Ix == i && Iy == j)
+					reach = true;
+			}
+		}
+		
+		return reach;
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 }

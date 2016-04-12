@@ -1,5 +1,8 @@
 import java.awt.Color;
+<<<<<<< HEAD
 import java.util.Stack;
+=======
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,7 +18,11 @@ import javax.swing.JPanel;
  * Method :
  * 	- public
  * 		- addColor(layoutPic : JLabel) : void
+<<<<<<< HEAD
  *  	- showPath(reachableGrid : Stack<Point>) : void
+=======
+ *  	- showPath(reachableGrid : boolean[][]) : void
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
  *  	- clearPath(void) : void
  */
 
@@ -48,10 +55,21 @@ public class ColorPanel {
 		}
 	}
 	
+<<<<<<< HEAD
 	public void showPath(Stack<Point> m){
 		
 		for(Point p : m){
 			color[p.x][p.y].setVisible(true);
+=======
+	public void showPath(boolean[][] reachableGrid){
+		
+		for(int i = 0; i < 8; i ++){
+			for(int j = 0; j < 8; j ++){
+				if(reachableGrid[i][j]){
+					color[i][j].setVisible(true);
+				}
+			}
+>>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		}
 		
 	}
