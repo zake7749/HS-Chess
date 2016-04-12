@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import java.util.Objects;
 
 /*
@@ -14,12 +13,6 @@ import java.util.Objects;
 
 public class Point {
 	
-=======
-
-public class Point {
-	
-	//to simulate a struct in C.
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	public int x;
 	public int y;
 	
@@ -27,7 +20,6 @@ public class Point {
 		this.x = x;
 		this.y = y;
 	}
-<<<<<<< HEAD
 	
     @Override
     public boolean equals(Object o) {
@@ -45,6 +37,4 @@ public class Point {
         return a.hashCode() ^ b.hashCode();
     }
 	
-=======
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 }

@@ -2,10 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
 import java.util.Stack;
-=======
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,12 +22,8 @@ public class Bishop extends Chess {
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 16;
-<<<<<<< HEAD
 		this.status = true;
 
-=======
-		
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		setImage();
 	}
 	
@@ -114,42 +107,22 @@ public class Bishop extends Chess {
 		}
 	    
 	}
-<<<<<<< HEAD
 	public Stack<Point> getReachableGrid(Chess[][] chessboard)
 	{
 		Stack<Point> moves = new Stack<Point>();
 
 		int i,j;
-=======
-	public boolean[][] getReachableGrid(Chess[][] chessboard)
-	{
-		boolean reachable[][] = new boolean[8][8];
-		
-		int i = 0,j = 0;
-		for(i=0;i<8;i++)
-			for(j=0;j<8;j++)
-				reachable[i][j] = false;
-		
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		for(i=1; i<8; i++)
 		{
 			if(x-i >= 0 && y-i>=0) //in the range
 			{
 				if(chessboard[x-i][y-i] == null) // reachable
 				{
-<<<<<<< HEAD
 					moves.push(new Point(x-i,y-i));
 				}
 				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x-i,y-i));
-=======
-					reachable[x-i][y-i] = true;
-				}
-				else if(chessboard[x-i][y-i].camp != camp) // enemy chess
-				{
-					reachable[x-i][y-i] = true;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else	break; 
@@ -164,19 +137,11 @@ public class Bishop extends Chess {
 			{
 				if(chessboard[x-i][y+i] == null) //reachable
 				{
-<<<<<<< HEAD
 					moves.push(new Point(x-i,y+i));
 				}	
 				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x-i,y+i));
-=======
-					reachable[x-i][y+i] = true;
-				}	
-				else if (chessboard[x-i][y+i].camp != camp) // enemy chess
-				{
-					reachable[x-i][y+i] = true;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}	
 				else	break;
@@ -191,19 +156,11 @@ public class Bishop extends Chess {
 			{
 				if(chessboard[x+i][y-i] == null) // reachable
 				{
-<<<<<<< HEAD
 					moves.push(new Point(x+i,y-i));
 				}	
 				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
 				{	
 					moves.push(new Point(x+i,y-i));
-=======
-					reachable[x+i][y-i] = true;
-				}	
-				else if (chessboard[x+i][y-i].camp != camp) // enemy chess
-				{	
-					reachable[x+i][y-i] = true;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else break;
@@ -218,19 +175,11 @@ public class Bishop extends Chess {
 			{
 				if(chessboard[x+i][y+i] == null) // reachable
 				{
-<<<<<<< HEAD
 					moves.push(new Point(x+i,y+i));
 				}
 				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
 				{
 					moves.push(new Point(x+i,y+i));
-=======
-					reachable[x+i][y+i] = true;
-				}
-				else if (chessboard[x+i][y+i].camp != camp) // enemy chess
-				{
-					reachable[x+i][y+i] = true;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 					break;
 				}
 				else	break;
@@ -240,7 +189,6 @@ public class Bishop extends Chess {
 		}
 		
 		
-<<<<<<< HEAD
 		moves.remove(new Point(x,y));
 		
 		return moves;
@@ -250,29 +198,5 @@ public class Bishop extends Chess {
 	{
 		Stack<Point> m = getReachableGrid(chessboard);
         return m.contains(new Point(Ix,Iy));
-=======
-		reachable[x][y] = false;
-		
-		return reachable;
-	}
-	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
-	{
-		boolean reach = false;
-		boolean[][] reachable;
-		int i, j;
-		
-		reachable = getReachableGrid(chessboard);
-		
-		for(i=0; i<8; i++)
-		{
-			for(j=0; j<8; j++)
-			{
-				if (reachable[i][j] == true && Ix == i && Iy == j)
-					reach = true;
-			}
-		}
-		
-		return reach;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 }

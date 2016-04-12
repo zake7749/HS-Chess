@@ -2,10 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-<<<<<<< HEAD
 import java.util.Stack;
-=======
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,11 +24,7 @@ public class Knight extends Chess implements Cloneable{
 		this.camp = camp;
 		this.critical = false;
 		this.weight = 12;
-<<<<<<< HEAD
 		this.status = true;
-=======
-		
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 		setImage();
 	}
 	
@@ -121,7 +114,6 @@ public class Knight extends Chess implements Cloneable{
 	    
 	}
 	@Override
-<<<<<<< HEAD
 	public Stack<Point> getReachableGrid(Chess[][] chessboard) {
 		
 		Stack<Point> moves = new Stack<Point>();
@@ -138,52 +130,13 @@ public class Knight extends Chess implements Cloneable{
 			}
 		}
 		return moves;
-=======
-	public boolean[][] getReachableGrid(Chess[][] chessboard) {
-		
-		boolean reachable[][] = new boolean[8][8];
-
-		int i = 0,j = 0;
-		for(i=0;i<8;i++)
-			for(j=0;j<8;j++)
-				reachable[i][j] = false;		
-		for(i=0;i<8;i++){
-			if(x+moveX[i]>=0&&x+moveX[i]<8&&y+moveY[i]>=0&&y+moveY[i]<8){
-				if(chessboard[x+moveX[i]][y+moveY[i]]==null)
-					reachable[x+moveX[i]][y+moveY[i]] = true;
-				else if(chessboard[x+moveX[i]][y+moveY[i]].camp!=camp){
-					reachable[x+moveX[i]][y+moveY[i]] = true;
-				}
-			}
-		}
-		return reachable;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 
 	@Override
 	public boolean isReachable(Chess[][]chessboard,int Ix,int Iy)
 	{
-<<<<<<< HEAD
 		Stack<Point> m = getReachableGrid(chessboard);
         return m.contains(new Point(Ix,Iy));
-=======
-		boolean reach = false;
-		boolean[][] reachable;
-		int i, j;
-		
-		reachable = getReachableGrid(chessboard);
-		
-		for(i=0; i<8; i++)
-		{
-			for(j=0; j<8; j++)
-			{
-				if (reachable[i][j] == true && Ix == i && Iy == j)
-					reach = true;
-			}
-		}
-		
-		return reach;
->>>>>>> 4023b0f014681d762cd04b517118f2508c45f24f
 	}
 
 }
