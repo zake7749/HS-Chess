@@ -56,7 +56,26 @@ public class AI {
 		}
 
 		/* Sort by weight */
+		Chess tp = null; 
 
+	    for(i = 1; i < 16; i++){
+	    	tp = com[i];
+	        for( j=i; j > 0 && tp.weight > com[j-1].weight; j-- )
+	        	com[j] = com[j-1];        
+	        com[j] = tp;
+	    }
+	    
+	    for(i = 1; i < 16; i++){
+	    	tp = player[i];
+	        for( j=i; j > 0 && tp.weight > player[j-1].weight; j-- )
+	        	player[j] = player[j-1];        
+	        player[j] = tp;
+	    }
+
+	    for(i=0;i<16;i++){
+	    	System.out.println(com[i].name);
+	    }
+	    
 	}
 	
 	
