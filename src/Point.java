@@ -13,8 +13,8 @@ import java.util.Objects;
 
 public class Point {
 	
-	public int x;
-	public int y;
+	public Integer x;
+	public Integer y;
 	
 	Point(int x,int y){
 		this.x = x;
@@ -32,9 +32,7 @@ public class Point {
     
     @Override
     public int hashCode() {
-    	Integer a = x;
-    	Integer b = y;
-        return a.hashCode() ^ b.hashCode();
+    	return Objects.hash(x, y);
     }
 	
 }

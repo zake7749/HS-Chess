@@ -304,8 +304,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		chessBoard[p.x][p.y].setImage();
 		chessBoard[p.x][p.y].icon.setBounds((p.x)*70+19,(p.y)*70+39,70,70);
 		chessBoardpic.add(chessBoard[p.x][p.y].icon);
-		chessBoardpic.repaint();
-		
+
 	}
 	
 	private void removeAChess(Point p){
@@ -322,7 +321,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		colorpanel.showPath(moves);
 		chessBoardpic.repaint();
 		
-		//stateX,stateY = x,y value of the selected chess.
+		/* stateX,stateY is the (x,y) value of a selected chess. */
 		stateX = p.x;
 		stateY = p.y;
 	}
@@ -343,14 +342,17 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		Point p = determineGrid(e.getX(),e.getY());
 		
-		//state 0 : Select a chess and focus on it.
-		//state 1 : Move the focused chess.
-		//state 2 : Game over. pause the ui.
+		/*
+		 * state 0 : Select a chess and focus on it.
+		 * state 1 : Move the focused chess.
+		 * state 2 : Game over. pause the ui.
+		 */
+
 		
 		if(state == 0 && isValidClick(p)){
 			clickAChess(p);
-			System.out.println("CLICKED:("+chessBoard[p.x][p.y].getX()+","+chessBoard[p.x][p.y].getY()+")");
-			state = 1;		
+			System.out.println("BOARD:"+this.getPostionString(p.x, p.y)+
+					"\tFACT:"+this.getPostionString(chessBoard[p.x][p.y].getX(), chessBoard[p.x][p.y].getY()));			state = 1;		
 	
 		}else if(state == 1){
 			
@@ -358,7 +360,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			
 			if(chessBoard[stateX][stateY].isReachable(chessBoard,p.x,p.y)){
 			
-			/*Can move to (px,py) from (sx,sy)*/
+			/*is able to move to (px,py) from (sx,sy)*/
 				
 				if(!isGameOver(p)){
 					state = 0;
@@ -393,26 +395,38 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			}else if(chessBoard[p.x][p.y]!=null&&chessBoard[p.x][p.y].camp == chessBoard[stateX][stateY].camp){
 				//select another chess.
 				clickAChess(p);
-			}
+				System.out.println("BOARD:"+this.getPostionString(p.x, p.y)+
+						"\tFACT:"+this.getPostionString(chessBoard[p.x][p.y].getX(), chessBoard[p.x][p.y].getY()));			}
 			else if(stateX == p.x && stateY == p.y){
 				//click the same chess again.
 				state = 0;
+				System.out.println("BOARD:"+this.getPostionString(p.x, p.y)+
+						"\tFACT:"+this.getPostionString(chessBoard[p.x][p.y].getX(), chessBoard[p.x][p.y].getY()));
 			}
 				
 		}
 	}
 	
+	private String getPostionString(int x,int y){
+		int temp1 = 8 - y;
+		return "("+intToChar(x)+","+temp1+")";
+	}
+	
 	private void AIstep(){
-
-			boolean GG = false;
+		
+			chessBoardpic.paintImmediately(chessBoardpic.getBounds());
 			chessBoardpic.repaint();
-			
+			colorpanel.clearPath();
+			boolean GG = false;
+
 			ai.setChessBoard(chessBoard);
 			ai.alphaBetaMax(-9999999,9999999, 0);
 			Point m = ai.getChoice();
 			Point s = ai.getSelected();
-					
-			colorpanel.clearPath();
+			ai.echoCount();
+			int temp1 = 8 - s.y;
+			int temp2 = 8 - m.y;
+			history.setText(""+intToChar(s.x)+temp1+" ---> "+intToChar(m.x)+temp2);
 			
 			if(chessBoard[m.x][m.y] != null){
 				removeAChess(new Point(m.x,m.y));
@@ -420,12 +434,11 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 					GG = true;
 			}
 
+
 			chessBoard[s.x][s.y].icon.setIcon(null);//clear picture
 			chessBoard[s.x][s.y].setFirstStep(false);
 			
-			int temp1 = 8 - s.y;
-			int temp2 = 8 - m.y;
-			history.setText(""+intToChar(s.x)+temp1+" ---> "+intToChar(m.x)+temp2);
+
 			
 			chessBoard[s.x][s.y].moveXY(m.x,m.y);
 			chessBoard[m.x][m.y] = chessBoard[s.x][s.y];
@@ -442,9 +455,6 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 				state = 2;
 			}
 						
-			if(chessBoard[m.x][m.y].getFirstStep()){
-				chessBoard[m.x][m.y].setFirstStep(false);
-			}
 			nowcamp = 0;
 			panel_2.setVisible(true);
 			panel_3.setVisible(false);
