@@ -1,4 +1,5 @@
 # Chess
-This is our in class java project.
 
-![](https://goo.gl/photos/STCbNZqcJ6sW8FTQ8)
+一個以爐石戰記佈景的西洋棋遊戲 :)
+
+![](http://i.imgur.com/pt5qcz1.png)
