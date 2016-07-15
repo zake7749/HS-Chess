@@ -36,16 +36,17 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	private ColorPanel colorpanel;
 	private AI ai;
 	private boolean notDual;
-	private JPanel panel_2,panel_3,panel_4;
+	private JPanel panel_1,panel_2,panel_3,panel_4;
 	
 	private int state;
 	private int nowcamp;
 	private int stateX, stateY;
-	private JTextArea history;
 	
 	private JButton Dual = new JButton("Dual");
 	private JButton vsCom = new JButton("vs Com");
 	private JButton unDo = new JButton("UNDO");
+	private JLabel lblNewLabel;
+	private JLabel history;
 	
 	public static void main(String[] args) {
 		try {
@@ -85,13 +86,14 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 10, 875, 675);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.addMouseListener(this);
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		chessBoardpic = new JLabel("");
-		chessBoardpic.setBounds(5, 0, 605, 637);
+		chessBoardpic.setBounds(12, 0, 605, 637);
 		chessBoardpic.setIcon(new ImageIcon("ChessBoard.png"));
 		contentPane.add(chessBoardpic);		
 		
@@ -101,31 +103,36 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
 		panel.setBounds(620, 21, 229, 360);
-		panel.setBackground(Color.GRAY);
+		panel.setBackground(new Color(70, 130, 180, 250));
 		contentPane.add(panel);
 		panel.setLayout(null);
+		Dual.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		
 		Dual.addActionListener(this);
 		Dual.setBounds(10, 30, 209, 90);
+		vsCom.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		vsCom.addActionListener(this);
 		vsCom.setBounds(10, 130, 209, 90);
+		unDo.setFont(new Font("Lucida Grande", Font.BOLD, 20));
 		unDo.addActionListener(this);
 		unDo.setBounds(10, 230, 209, 90);
 		panel.add(Dual);
 		panel.add(vsCom);
 		panel.add(unDo);
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(620, 390, 230, 230);
+		panel_1.setBounds(620, 390, 230, 226);
 		panel_1.setLayout(null);
-		panel_1.setBackground(Color.GRAY);
+		panel_1.setBackground(new Color(70, 130, 180,255));
 		contentPane.add(panel_1);
 		
 		panel_2 = new JPanel();		
+		panel_2.setBorder(null);
 		JTextArea campName = new JTextArea();
-		campName.setBackground(Color.GRAY);
-		panel_2.setBackground(Color.GRAY);
+		campName.setForeground(new Color(255, 255, 255));
+		campName.setBackground(new Color(70, 130, 180,0));
+		panel_2.setBackground(new Color(70, 130, 180,0));
 		Font font = new Font("Verdana", Font.BOLD, 20);
 		campName.setFont(font);
 		campName.setText("Humans Alliance");
@@ -135,8 +142,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		panel_3 = new JPanel();//
 		JTextArea campName2 = new JTextArea();
-		campName2.setBackground(Color.BLACK);
-		panel_3.setBackground(Color.GRAY);
+		campName2.setForeground(new Color(248, 248, 255));
+		campName2.setBackground(new Color(70,130,180,0));
+		panel_3.setBackground(new Color(70,130,180,0));
 		campName2.setFont(font);
 		campName2.setText("Dark Dragon");
 		panel_3.setBounds(10, 30, 210, 40);
@@ -145,15 +153,22 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		panel_3.setVisible(false);
 		
 		panel_4 = new JPanel();//
-		history = new JTextArea();
-		history.setBackground(Color.GRAY);
-		panel_4.setBackground(Color.GRAY);
-		history.setFont(font);
-		history.setText("Record");
-		history.setEditable(false);
+		panel_4.setForeground(new Color(70, 130, 180,0));
+		panel_4.setBorder(null);
+		panel_4.setBackground(new Color(70, 130, 180,0));
 		panel_4.setBounds(10, 95, 210, 90);
+		panel_1.add(panel_4);
+		
+		history = new JLabel("Result");
+		history.setFont(new Font("Verdana", Font.BOLD, 20));
+		history.setForeground(new Color(248, 248, 255));
 		panel_4.add(history);
-		panel_1.add(panel_4);//
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("Black-texture.jpg"));
+		lblNewLabel.setLayout(new BorderLayout());
+		lblNewLabel.setBounds(0, 0, 875, 637);
+		contentPane.add(lblNewLabel);
 		
 		buildChessboard();
 		
@@ -374,11 +389,11 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 					
 				int temp1 = 8 - stateY;
 				int temp2 = 8 - p.y;
-				history.setText(""+intToChar(stateX)+temp1+" ---> "+intToChar(p.x)+temp2);
-				
+				history.setText(""+intToChar(stateX)+temp1+" move to "+intToChar(p.x)+temp2);
+				panel_1.repaint();
 				if(notDual){
 					AIstep();
-				}		
+				}	
 				else{
 					if(nowcamp == 0){
 						nowcamp = 1;
@@ -426,8 +441,9 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			ai.echoCount();
 			int temp1 = 8 - s.y;
 			int temp2 = 8 - m.y;
-			history.setText(""+intToChar(s.x)+temp1+" ---> "+intToChar(m.x)+temp2);
-			
+			history.setText(""+intToChar(s.x)+temp1+" move to "+intToChar(m.x)+temp2);
+			panel_1.repaint();
+
 			if(chessBoard[m.x][m.y] != null){
 				removeAChess(new Point(m.x,m.y));
 				if(chessBoard[m.x][m.y].isCritical())
@@ -460,7 +476,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 			panel_3.setVisible(false);
 	}
 	
-	/* �Ω󮬴� */
+	/* �Ω󮬴� */
 	private void setLastChessBoard(int ncamp){
 		if(nowcamp == 0){
 			for(int i = 0; i < 8; i++){
