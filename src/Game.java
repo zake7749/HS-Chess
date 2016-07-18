@@ -10,7 +10,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
@@ -25,7 +28,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Stack;
 
-import javax.swing.JButton;//
+import javax.swing.JButton;
+import javax.swing.JMenuBar;//
 
 public class Game extends JFrame implements MouseListener , ActionListener{//test
 
@@ -44,7 +48,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 	
 	private JButton Dual = new JButton("Dual");
 	private JButton vsCom = new JButton("vs Com");
-	private JButton unDo = new JButton("UNDO");
+	private JButton unDo = new JButton("Undo");
 	private JLabel lblNewLabel;
 	private JLabel history;
 	
@@ -93,7 +97,7 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		contentPane.setLayout(null);
 
 		chessBoardpic = new JLabel("");
-		chessBoardpic.setBounds(12, 0, 605, 637);
+		chessBoardpic.setBounds(16, 0, 605, 637);
 		chessBoardpic.setIcon(new ImageIcon("ChessBoard.png"));
 		contentPane.add(chessBoardpic);		
 		
@@ -102,29 +106,47 @@ public class Game extends JFrame implements MouseListener , ActionListener{//tes
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 255, 0)));
-		panel.setBounds(620, 21, 229, 360);
-		panel.setBackground(new Color(70, 130, 180, 250));
+		panel.setBounds(629, 21, 229, 343);
+		panel.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		Dual.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		Dual.setForeground(Color.DARK_GRAY);
+		Dual.setFont(new Font("Heiti TC", Font.BOLD, 16));
 		
 		Dual.addActionListener(this);
-		Dual.setBounds(10, 30, 209, 90);
-		vsCom.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		Dual.setBounds(10, 214, 209, 36);
+		vsCom.setForeground(Color.DARK_GRAY);
+		vsCom.setFont(new Font("Heiti TC", Font.BOLD, 16));
 		vsCom.addActionListener(this);
-		vsCom.setBounds(10, 130, 209, 90);
-		unDo.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		vsCom.setBounds(10, 256, 209, 36);
+		unDo.setForeground(Color.DARK_GRAY);
+		unDo.setBackground(Color.RED);
+		unDo.setFont(new Font("Heiti TC", Font.BOLD, 16));
 		unDo.addActionListener(this);
-		unDo.setBounds(10, 230, 209, 90);
+		unDo.setBounds(10, 298, 209, 36);
 		panel.add(Dual);
 		panel.add(vsCom);
 		panel.add(unDo);
 		
+		JTextArea txtrHsChess = new JTextArea();
+		txtrHsChess.setText("HS - Chess");
+		txtrHsChess.setForeground(Color.WHITE);
+		txtrHsChess.setFont(new Font("Serif", Font.BOLD, 32));
+		txtrHsChess.setBackground(Color.DARK_GRAY);
+		txtrHsChess.setBounds(37, 38, 165, 30);
+		panel.add(txtrHsChess);
+		
+		JLabel hs_logo = new JLabel();
+		
+		hs_logo.setBounds(10, 64, 192, 147);
+		//hs_logo.setIcon(new ImageIcon("hearthstone-logo.png"));
+		panel.add(hs_logo);
+		
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(620, 390, 230, 226);
+		panel_1.setBounds(629, 390, 230, 226);
 		panel_1.setLayout(null);
-		panel_1.setBackground(new Color(70, 130, 180,255));
+		panel_1.setBackground(Color.DARK_GRAY);
 		contentPane.add(panel_1);
 		
 		panel_2 = new JPanel();		
