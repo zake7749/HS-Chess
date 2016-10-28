@@ -1,6 +1,6 @@
 # HearthStone Chess
 
-以爐石戰記佈景的西洋棋遊戲，目前已實現雙人對戰與 AI 對戰（前瞻 8 步）。
+以爐石戰記佈景的西洋棋遊戲，實現人機對戰與單機雙人對戰。
 
-![](http://i.imgur.com/pt5qcz1.png)
+![](http://i.imgur.com/jXWjnV2.png)
 
